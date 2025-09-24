@@ -1,9 +1,11 @@
+// lib/stripe.ts
 import Stripe from "stripe";
 
 if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("Missing STRIPE_SECRET_KEY in .env.local");
+  throw new Error("❌ Missing STRIPE_SECRET_KEY in environment variables");
 }
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2024-06-20",
+// ✅ Use your account’s default Stripe API version (no type errors)
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: null,
 });
