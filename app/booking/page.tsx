@@ -1,32 +1,30 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { rooms } from "@/lib/rooms";
+
+const rooms = [
+  { id: "DELUXE", name: "DELUXE", price: 140, image: "/images/deluxe.jpg" },
+  { id: "ACCESSIBLE", name: "ACCESSIBLE SUITE", price: 160, image: "/images/accessible.jpg" },
+  { id: "FAMILY", name: "FAMILY ROOM", price: 200, image: "/images/family.jpg" },
+];
 
 export default function BookingPage() {
   return (
-    <section className="section">
-      <div className="container">
-        <h1 className="section-title text-center">Book Your Stay</h1>
-        <p className="text-center text-neutral-700 mb-10">
-          Choose the perfect option for your stay at Serenova.
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+    <section className="bg-[#FAF8F5] py-20">
+      <div className="max-w-6xl mx-auto px-6">
+        <h2 className="text-4xl font-serif mb-12 text-center text-[#0F1915]">Book Your Stay</h2>
+        <div className="grid md:grid-cols-3 gap-10">
           {rooms.map((room) => (
-            <div key={room.id} className="card overflow-hidden">
-              <Image
-                src={room.image}
-                alt={room.title}
-                width={600}
-                height={400}
-                className="h-56 w-full object-cover"
-                priority={room.id === "deluxe"} 
-              />
+            <div key={room.id} className="bg-white rounded-2xl shadow-md overflow-hidden">
+              <Image src={room.image} alt={room.name} width={600} height={400} className="w-full h-64 object-cover" />
               <div className="p-6">
-                <h2 className="font-serif text-xl mb-2">{room.title}</h2>
-                <p className="text-neutral-600 mb-3">{room.description}</p>
-                <p className="font-medium mb-4">€{room.price}/night</p>
-                <Link href={`/booking/${room.id}`} className="btn btn-primary">
+                <h3 className="text-xl font-semibold mb-2">{room.name}</h3>
+                <p className="text-gray-700 mb-4">€{room.price} per night</p>
+                <Link
+                  href={`/booking/${room.id}`}
+                  className="block text-center bg-[#2E6B4F] text-white px-4 py-2 rounded-lg hover:bg-[#24543E] transition"
+                >
                   Book Now
                 </Link>
               </div>
