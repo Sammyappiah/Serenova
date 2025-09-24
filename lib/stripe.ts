@@ -5,7 +5,5 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error("❌ Missing STRIPE_SECRET_KEY in environment variables");
 }
 
-// ✅ Use your account’s default Stripe API version (no type errors)
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: null,
-});
+// ✅ No apiVersion specified → uses your Stripe account’s default
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
