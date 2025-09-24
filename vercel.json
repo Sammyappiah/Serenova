@@ -1,14 +1,9 @@
 {
   "redirects": [
     {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.serenova.ro"
-        }
-      ],
-      "destination": "https://serenova.ro/$1",
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.serenova.ro" }],
+      "destination": "https://serenova.ro/:path*",
       "permanent": true
     }
   ]
