@@ -71,3 +71,33 @@
 .animate-fadeUp {
   animation: fadeUp 1.2s ease-out forwards;
 }
+
+/* ✅ Ken Burns Animation */
+@keyframes kenburns {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-kenburns {
+  animation: kenburns 20s ease-in-out forwards;
+}
+
+/* ✅ Fade-up text animation */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 1.5s ease-out forwards;
+}
