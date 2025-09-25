@@ -34,7 +34,7 @@ export default function HomePage() {
         <p className="max-w-3xl mx-auto text-lg text-neutral-700">
           Discover our eco-luxury village where sustainability meets
           sophistication. From solar-powered villas to lush gardens, Serenova
-          redefines modern eco-living with the comforts of a 5-star resort.
+          redefines modern eco-living with elegance and harmony with nature.
         </p>
       </section>
     </main>
