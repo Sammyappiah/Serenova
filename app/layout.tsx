@@ -1,20 +1,35 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Serenova Eco Village – Modern Eco-Luxury Resort",
   description: "Eco-friendly modular homes with modern comfort and natural serenity.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    title: "Serenova Eco Village",
+    description: "Eco-friendly modular homes with modern comfort and natural serenity.",
+    url: "https://serenova.ro",
+    siteName: "Serenova",
+    images: [{ url: "/images/og-image.jpg", width: 1200, height: 630, alt: "Serenova Eco Village" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Serenova Eco Village",
+    description: "Eco-friendly modular homes with modern comfort and natural serenity.",
+    images: ["/images/og-image.jpg"],
+  },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-[#FAF8F5] text-[#0F1915]">
+      <body className="bg-[#FAF8F5] text-[#0F1915] antialiased">
         <Navbar />
         <main className="pt-20">{children}</main>
         <Footer />

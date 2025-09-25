@@ -2,102 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .container {
-    @apply mx-auto px-4 max-w-6xl;
-  }
-
-  .section {
-    @apply py-16;
-  }
-
-  .section-title {
-    @apply font-serif text-3xl mb-8;
-    color: theme('colors.deep-forest'); /* direct color reference */
-  }
-
-  .card {
-    @apply rounded-2xl bg-white shadow-soft;
-  }
-
-  .card-content {
-    @apply p-4;
-  }
-
-  .shadow-soft {
-    @apply shadow-md;
-  }
-
-  .btn {
-    @apply inline-block px-6 py-2 rounded-2xl font-medium transition transform;
-  }
-
-  .btn-primary {
-    @apply bg-sereno-green text-white shadow-soft hover:scale-105 hover:shadow-lg;
-  }
-
-  .btn-ghost {
-    @apply border border-neutral-300 hover:scale-105 hover:shadow;
-    color: theme('colors.deep-forest');
-  }
+/* Typography tuning */
+:root {
+  --cream: #FAF8F5;
+  --green: #2E6B4F;
+  --forest: #0F1915;
+  --gold: #C4A968;
 }
 
+/* Basic resets */
+html, body { height: 100%; }
+
+/* Section rhythm */
+.section { @apply py-14 md:py-20; }
+.container { @apply max-w-6xl mx-auto px-4; }
+.section-title { @apply font-serif text-3xl md:text-5xl leading-tight; }
+
+/* Cards */
+.card { @apply rounded-2xl bg-white shadow-soft overflow-hidden border border-black/5; }
+.card-content { @apply p-5; }
+
+/* Buttons */
+.btn { @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 transition; }
+.btn-primary { @apply bg-[#2E6B4F] text-white hover:opacity-90; }
+.btn-ghost { @apply border border-neutral-300 hover:shadow; }
+
+/* Soft shadow */
+.shadow-soft { box-shadow: 0 10px 30px rgba(10, 20, 15, 0.07); }
+
+/* Fade-up animation */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+.animate-fadeUp { animation: fadeUp .9s ease both; }
 
-.animate-fadeUp {
-  animation: fadeUp 1.2s ease-out forwards;
-}
+/* Image caption style */
+.figure { @apply relative overflow-hidden rounded-2xl bg-white shadow-soft border border-black/5; }
+.figcap { @apply p-3 text-sm text-neutral-600; }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Navbar blur */
+.nav-blur { backdrop-filter: blur(10px); background: rgba(250, 248, 245, 0.75); }
 
-.animate-fadeUp {
-  animation: fadeUp 1.2s ease-out forwards;
-}
-
-/* ✅ Ken Burns Animation */
-@keyframes kenburns {
-  0% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.animate-kenburns {
-  animation: kenburns 20s ease-in-out forwards;
-}
-
-/* ✅ Fade-up text animation */
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeUp {
-  animation: fadeUp 1.5s ease-out forwards;
-}
+/* Footer links */
+.footer-link { @apply text-neutral-600 hover:text-[#2E6B4F] transition; }
