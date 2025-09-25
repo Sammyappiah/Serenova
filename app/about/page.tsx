@@ -1,91 +1,51 @@
+// app/about/page.tsx
 import Image from "next/image";
 
-export const metadata = {
-  title: "About Serenova",
-  description: "Our story, sustainability, and community design.",
-};
+const gallery = [
+  { src: "/images/lounge.jpg", alt: "Elegant Lounge", caption: "Elegant Lounge" },
+  { src: "/images/family.jpg", alt: "Family Suite", caption: "Spacious Family Suite" },
+  { src: "/images/deluxe.jpg", alt: "Deluxe Room", caption: "Deluxe Room with Garden View" },
+  { src: "/images/accessible.jpg", alt: "Accessible Suite", caption: "Accessible Luxury Suite" },
+  { src: "/images/ev-charging.jpg", alt: "EV Charging", caption: "Sustainable EV Charging" },
+  { src: "/images/Gardens.jpg", alt: "Eco Gardens", caption: "Eco-Friendly Gardens" },
+];
 
-export default function About() {
+export default function AboutPage() {
   return (
-    <>
-      {/* HERO */}
-      <section className="relative h-[50vh] w-full overflow-hidden">
-        <Image
-          src="/images/reception.jpg"
-          alt="Serenova reception"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/10" />
-        <div className="absolute inset-0 flex items-start justify-start pt-24 pl-10 md:pl-20">
-          <div className="animate-fadeUp max-w-2xl">
-            <h1 className="font-serif text-4xl md:text-6xl text-[#FAF8F5] mb-3 leading-tight">
-              About Serenova
-            </h1>
-            <p className="text-[#FAF8F5] text-lg md:text-xl font-light drop-shadow">
-              Sustainable stays crafted for calm, comfort, and connection.
-            </p>
-          </div>
-        </div>
-      </section>
+    <main className="bg-[#FAF8F5] text-[#0F1915]">
+      <section className="py-20 px-6 md:px-20">
+        <h1 className="font-serif text-4xl md:text-5xl mb-10 text-center text-[#2E6B4F]">
+          About Serenova
+        </h1>
+        <p className="max-w-3xl mx-auto text-lg text-neutral-700 text-center mb-16">
+          Serenova Eco Village combines modern comfort with sustainability. Our
+          resort is designed to respect nature while offering world-class
+          luxury. Explore our spaces below:
+        </p>
 
-      {/* STORY */}
-      <section className="section">
-        <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="animate-fadeUp">
-            <h2 className="section-title mb-4">Our Story</h2>
-            <p className="text-neutral-700 leading-relaxed">
-              Serenova was founded on the belief that modern travel can be
-              sustainable, accessible, and inspiring. Our modular eco-homes
-              blend modern design with renewable solar power, set amidst
-              landscaped gardens that honor the natural environment. We welcome
-              couples, families, and travelers seeking a premium, nature-forward
-              experience—without compromise.
-            </p>
-          </div>
-          <figure className="figure">
-            <Image
-              src="/images/village-aerial.jpg"
-              alt="Aerial view of the eco-village"
-              width={1200}
-              height={800}
-              className="h-[420px] w-full object-cover"
-            />
-            <figcaption className="figcap">
-              Aerial view: homes, solar, outdoor kitchen, and caravan spaces.
-            </figcaption>
-          </figure>
+        {/* Gallery */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {gallery.map((item, idx) => (
+            <div
+              key={idx}
+              className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition"
+            >
+              <Image
+                src={item.src}
+                alt={item.alt}
+                width={600}
+                height={400}
+                className="object-cover h-64 w-full"
+              />
+              <div className="p-4 bg-white">
+                <p className="text-center font-medium text-neutral-800">
+                  {item.caption}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
-
-      {/* 2×3 GALLERY */}
-      <section className="section pt-0">
-        <div className="container">
-          <h2 className="section-title mb-6">A Sense of Place</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              { src: "/images/reception.jpg", cap: "Reception" },
-              { src: "/images/homes.jpg", cap: "Modular Homes" },
-              { src: "/images/gardens.jpg", cap: "Landscaped Gardens" },
-              { src: "/images/lounge.jpg", cap: "Community Lounge" },
-              { src: "/images/outdoor-kitchen.jpg", cap: "Outdoor Kitchen & BBQ" },
-              { src: "/images/ev-charging.jpg", cap: "EV Charging" },
-            ].map((i) => (
-              <figure key={i.src} className="figure group">
-                <Image
-                  src={i.src}
-                  alt={i.cap}
-                  width={900}
-                  height={600}
-                  className="h-64 w-full object-cover transition group-hover:scale-[1.02]"
-                />
-                <figcaption className="figcap">{i.cap}</figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
+    </main>
   );
 }
