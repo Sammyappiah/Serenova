@@ -1,92 +1,112 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { getRoom, nightsBetween, calculateTotal } from "@/lib/rooms";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-export default function RoomBooking() {
-  const { roomId } = useParams<{ roomId: string }>();
+const rooms: Record<string, { name: string; price: number; maxGuests: number; image: string }> = {
+  deluxe: { name: "Deluxe Room", price: 200, maxGuests: 3, image: "/images/deluxe.jpg" },
+  accessible: { name: "Accessible Suite", price: 150, maxGuests: 2, image: "/images/accessible.jpg" },
+  family: { name: "Family Room", price: 250, maxGuests: 5, image: "/images/family.jpg" },
+};
+
+export default function RoomPage({ params }: { params: { roomId: string } }) {
   const router = useRouter();
-  const room = getRoom(roomId);
-
-  const today = new Date().toISOString().split("T")[0];
+  const room = rooms[params.roomId];
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(1);
+  const [total, setTotal] = useState<number | null>(null);
 
-  const nights = useMemo(() => nightsBetween(checkIn, checkOut), [checkIn, checkOut]);
-  const total = useMemo(() => calculateTotal(roomId, checkIn, checkOut), [roomId, checkIn, checkOut]);
+  // Calculate total whenever inputs change
+  useEffect(() => {
+    if (checkIn && checkOut) {
+      const start = new Date(checkIn);
+      const end = new Date(checkOut);
+      if (end > start) {
+        const nights = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+        setTotal(nights * room.price);
+      } else {
+        setTotal(null);
+      }
+    }
+  }, [checkIn, checkOut, room.price]);
 
-  if (!room) return <p>Room not found.</p>;
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleContinue = () => {
+    if (!checkIn || !checkOut || !total) {
+      alert("Please select valid dates.");
+      return;
+    }
+    if (guests > room.maxGuests) {
+      alert(`Maximum ${room.maxGuests} guests allowed.`);
+      return;
+    }
     router.push(
-      `/checkout?roomId=${room.id}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&total=${total}`
+      `/checkout?room=${params.roomId}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&total=${total}`
     );
   };
 
+  if (!room) return <div className="p-10">Room not found</div>;
+
   return (
-    <section className="section">
-      <div className="container max-w-3xl mx-auto bg-white shadow-soft rounded-2xl p-8">
-        <h1 className="font-serif text-3xl mb-6">{room.title}</h1>
-        <img src={room.image} alt={room.title} className="rounded-xl mb-6" />
+    <section className="min-h-screen bg-[#FAF8F5] py-20">
+      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12">
+        <div>
+          <img
+            src={room.image}
+            alt={room.name}
+            className="w-full h-[400px] object-cover rounded-2xl shadow-lg"
+          />
+        </div>
+        <div>
+          <h1 className="text-4xl font-serif text-[#0F1915] mb-4">{room.name}</h1>
+          <p className="text-lg text-neutral-700 mb-6">€{room.price} / night</p>
 
-        <p className="text-neutral-700 mb-4">{room.description}</p>
-        <ul className="list-disc ml-6 mb-6 text-neutral-700">
-          {room.features.map((f) => (
-            <li key={f}>{f}</li>
-          ))}
-        </ul>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block mb-1 font-medium">Check-in</label>
-            <input
-              type="date"
-              min={today}
-              value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
-              required
-              className="border rounded-lg p-2 w-full"
-            />
+          <div className="space-y-4">
+            <div>
+              <label className="block mb-1 text-sm">Check-in</label>
+              <input
+                type="date"
+                className="w-full border rounded-lg px-3 py-2"
+                value={checkIn}
+                min={new Date().toISOString().split("T")[0]}
+                onChange={(e) => setCheckIn(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block mb-1 text-sm">Check-out</label>
+              <input
+                type="date"
+                className="w-full border rounded-lg px-3 py-2"
+                value={checkOut}
+                min={checkIn || new Date().toISOString().split("T")[0]}
+                onChange={(e) => setCheckOut(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block mb-1 text-sm">Guests</label>
+              <input
+                type="number"
+                min="1"
+                max={room.maxGuests}
+                className="w-full border rounded-lg px-3 py-2"
+                value={guests}
+                onChange={(e) => setGuests(Number(e.target.value))}
+              />
+              <p className="text-xs text-neutral-500">Max {room.maxGuests} guests</p>
+            </div>
           </div>
 
-          <div>
-            <label className="block mb-1 font-medium">Check-out</label>
-            <input
-              type="date"
-              min={checkIn || today}
-              value={checkOut}
-              onChange={(e) => setCheckOut(e.target.value)}
-              required
-              className="border rounded-lg p-2 w-full"
-            />
+          <div className="mt-6 text-xl font-semibold">
+            Total: {total ? `€${total}` : "—"}
           </div>
-
-          <div>
-            <label className="block mb-1 font-medium">Guests</label>
-            <input
-              type="number"
-              min={1}
-              max={room.maxGuests}
-              value={guests}
-              onChange={(e) => setGuests(parseInt(e.target.value))}
-              required
-              className="border rounded-lg p-2 w-full"
-            />
-          </div>
-
-          <p className="font-bold text-lg">Total: €{total.toFixed(2)}</p>
 
           <button
-            type="submit"
-            disabled={!checkIn || !checkOut || nights <= 0}
-            className="btn btn-primary w-full mt-4"
+            onClick={handleContinue}
+            className="mt-6 w-full bg-[#2E6B4F] text-white py-3 rounded-lg hover:bg-[#24523d] transition"
           >
             Continue to Reservation
           </button>
-        </form>
+        </div>
       </div>
     </section>
   );
