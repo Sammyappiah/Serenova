@@ -1,64 +1,79 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 const rooms = [
   {
     id: "accessible",
     name: "Accessible Suite",
     price: 70,
+    img: "/images/accessible.jpg",
+    desc: "Inclusive design, modern comfort, and serene surroundings.",
     maxGuests: 2,
-    image: "/images/accessible.jpg",
   },
   {
     id: "deluxe",
     name: "Deluxe Room",
     price: 70,
+    img: "/images/deluxe.jpg",
+    desc: "Stylish and spacious with elegant interiors and nature views.",
     maxGuests: 3,
-    image: "/images/deluxe.jpg",
   },
   {
     id: "family",
     name: "Family Room",
     price: 85,
-    maxGuests: 5,
-    image: "/images/family.jpg",
+    img: "/images/family.jpg",
+    desc: "Perfect for families, offering comfort and space for everyone.",
+    maxGuests: 4,
   },
 ];
 
 export default function BookingPage() {
   return (
-    <section className="min-h-screen bg-[#FAF8F5] flex items-center py-20">
-      <div className="max-w-6xl mx-auto px-6 w-full">
-        <h1 className="text-4xl md:text-5xl font-serif text-center mb-12 text-[#0F1915]">
-          Choose Your Stay
-        </h1>
+    <main className="bg-[#FAF8F5] text-[#0F1915]">
+      {/* Hero Section */}
+      <section className="relative h-[50vh] w-full overflow-hidden">
+        <Image
+          src="/images/hero.jpg"
+          alt="Booking Serenova"
+          fill
+          priority
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 flex items-center justify-center text-center">
+          <h1 className="text-5xl md:text-6xl font-serif text-white drop-shadow-lg animate-fadeUp">
+            Book Your Stay
+          </h1>
+        </div>
+      </section>
 
-        <div className="grid md:grid-cols-3 gap-10">
-          {rooms.map((room, index) => (
+      {/* Room Listings */}
+      <section className="py-20 px-6 md:px-20">
+        <div className="grid md:grid-cols-3 gap-12 max-w-7xl mx-auto">
+          {rooms.map((room, idx) => (
             <div
-              key={room.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden transform transition duration-500 hover:-translate-y-2 hover:shadow-2xl animate-fadeUp"
-              style={{ animationDelay: `${index * 150}ms` }}
+              key={idx}
+              className="rounded-2xl overflow-hidden shadow-lg bg-white hover:shadow-2xl transition hover-float animate-fadeUp"
             >
               <Image
-                src={room.image}
+                src={room.img}
                 alt={room.name}
                 width={600}
                 height={400}
-                className="w-full h-64 object-cover"
+                className="object-cover w-full h-[250px]"
               />
               <div className="p-6 text-center">
-                <h2 className="text-2xl font-serif text-[#0F1915] mb-2">
-                  {room.name}
-                </h2>
-                <p className="text-lg text-neutral-700 mb-4">
+                <h2 className="text-2xl font-serif mb-2">{room.name}</h2>
+                <p className="text-neutral-700 mb-4">{room.desc}</p>
+                <p className="text-lg font-semibold mb-4">
                   From €{room.price} / night
                 </p>
                 <Link
                   href={`/booking/${room.id}`}
-                  className="inline-block bg-[#2E6B4F] text-white px-6 py-3 rounded-lg hover:bg-[#24523d] transition"
+                  className="inline-block px-6 py-3 bg-[#2E6B4F] text-white rounded-xl hover:bg-[#24523d] transition"
                 >
                   View Details
                 </Link>
@@ -66,7 +81,7 @@ export default function BookingPage() {
             </div>
           ))}
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
   );
 }
