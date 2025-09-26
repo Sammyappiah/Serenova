@@ -1,59 +1,69 @@
-import Image from "next/image";
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
 
 const rooms = [
   {
-    id: "deluxe",
-    title: "DELUXE ROOM",
+    id: "accessible",
+    name: "Accessible Suite",
     price: 70,
-    image: "/images/deluxe.jpg",
-    desc: "Minimalist comfort with natural materials and soft daylight.",
+    maxGuests: 2,
+    image: "/images/accessible.jpg",
   },
   {
-    id: "accessible",
-    title: "ACCESSIBLE SUITE",
+    id: "deluxe",
+    name: "Deluxe Room",
     price: 70,
-    image: "/images/accessible.jpg",
-    desc: "Step-free entry, roll-in shower, and refined finishes.",
+    maxGuests: 3,
+    image: "/images/deluxe.jpg",
   },
   {
     id: "family",
-    title: "FAMILY ROOM",
+    name: "Family Room",
     price: 85,
+    maxGuests: 5,
     image: "/images/family.jpg",
-    desc: "Spacious layout with sleeping for up to four guests.",
-  },
-  {
-    id: "caravan",
-    title: "CARAVAN & TRAILER PITCH",
-    price: 40,
-    image: "/images/caravans.jpg",
-    desc: "Generous spaces with facilities and landscaped surroundings.",
   },
 ];
 
-export const metadata = { title: "Booking – Serenova" };
-
-export default function Booking() {
+export default function BookingPage() {
   return (
-    <section className="section">
-      <div className="container">
-        <h1 className="section-title mb-8">Choose Your Stay</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {rooms.map(r => (
-            <article key={r.id} className="card">
-              <Image src={r.image} alt={r.title} width={1200} height={800} className="h-64 w-full object-cover" />
-              <div className="card-content">
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="font-serif text-xl">{r.title}</h3>
-                  <div className="text-[#2E6B4F] font-medium">€{r.price}/night</div>
-                </div>
-                <p className="text-neutral-700 mt-2">{r.desc}</p>
-                <Link href={`/booking/${r.id}`} className="btn btn-primary mt-4 w-full text-center">
-                  Book Now
+    <section className="min-h-screen bg-[#FAF8F5] flex items-center py-20">
+      <div className="max-w-6xl mx-auto px-6 w-full">
+        <h1 className="text-4xl md:text-5xl font-serif text-center mb-12 text-[#0F1915]">
+          Choose Your Stay
+        </h1>
+
+        <div className="grid md:grid-cols-3 gap-10">
+          {rooms.map((room, index) => (
+            <div
+              key={room.id}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden transform transition duration-500 hover:-translate-y-2 hover:shadow-2xl animate-fadeUp"
+              style={{ animationDelay: `${index * 150}ms` }}
+            >
+              <Image
+                src={room.image}
+                alt={room.name}
+                width={600}
+                height={400}
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-6 text-center">
+                <h2 className="text-2xl font-serif text-[#0F1915] mb-2">
+                  {room.name}
+                </h2>
+                <p className="text-lg text-neutral-700 mb-4">
+                  From €{room.price} / night
+                </p>
+                <Link
+                  href={`/booking/${room.id}`}
+                  className="inline-block bg-[#2E6B4F] text-white px-6 py-3 rounded-lg hover:bg-[#24523d] transition"
+                >
+                  View Details
                 </Link>
               </div>
-            </article>
+            </div>
           ))}
         </div>
       </div>
