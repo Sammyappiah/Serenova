@@ -1,67 +1,132 @@
-"use client";
-
 import Image from "next/image";
 
-export default function AboutPage() {
-  const gallery = [
-    { src: "/images/lounge.jpg", alt: "Lounge", caption: "Relax in style" },
-    { src: "/images/Gardens.jpg", alt: "Gardens", caption: "Lush green spaces" },
-    { src: "/images/accessible.jpg", alt: "Accessible Suite", caption: "Inclusive design" },
-    { src: "/images/deluxe.jpg", alt: "Deluxe Room", caption: "Modern comfort" },
-    { src: "/images/family.jpg", alt: "Family Room", caption: "Spacious living" },
-    { src: "/images/ev-charging.jpg", alt: "EV Charging", caption: "Sustainable travel" },
-  ];
-
+export default function About() {
   return (
     <main className="bg-[#FAF8F5] text-[#0F1915]">
       {/* Hero Section */}
       <section className="relative h-[60vh] w-full overflow-hidden">
         <Image
-          src="/images/hero.jpg"
-          alt="About Serenova"
+          src="/images/reception.jpg"
+          alt="Serenova Reception"
           fill
-          priority
           className="object-cover"
+          priority
         />
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="absolute inset-0 flex items-center justify-center text-center">
-          <h1 className="text-5xl md:text-6xl font-serif text-white drop-shadow-lg animate-fadeUp">
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+          <h1 className="font-serif text-5xl md:text-6xl text-white drop-shadow-lg">
             About Serenova
           </h1>
         </div>
       </section>
 
       {/* Intro */}
-      <section className="py-20 px-6 md:px-20 text-center">
-        <h2 className="text-3xl md:text-4xl font-serif text-[#2E6B4F] mb-6 animate-fadeUp">
-          Where Sustainability Meets Elegance
-        </h2>
-        <p className="max-w-3xl mx-auto text-lg text-neutral-700 animate-fadeIn">
-          Serenova is more than a destination — it is a community designed with care for
-          both people and nature. Every detail of our eco-village reflects our values:
-          harmony, sustainability, and modern luxury.
+      <section className="py-20 px-6 md:px-20 text-center max-w-3xl mx-auto">
+        <h2 className="font-serif text-4xl mb-6 text-[#2E6B4F]">Our Story</h2>
+        <p className="text-lg text-neutral-700 leading-relaxed">
+          Serenova was founded on the belief that sustainable living can be both
+          elegant and comfortable. Designed as a sanctuary where nature and
+          architecture blend seamlessly, our eco-village offers a retreat from
+          the ordinary while embracing modern luxuries.
         </p>
       </section>
 
-      {/* Gallery */}
-      <section className="max-w-6xl mx-auto px-6 md:px-20 grid grid-cols-1 md:grid-cols-3 gap-8 pb-20">
-        {gallery.map((item, idx) => (
-          <div
-            key={idx}
-            className="relative rounded-2xl overflow-hidden shadow-lg hover-float animate-fadeUp"
-          >
+      {/* 2×3 Image Grid */}
+      <section className="px-6 md:px-20 pb-20">
+        <div className="grid md:grid-cols-3 gap-8">
+          {/* Image 1 */}
+          <div className="rounded-2xl shadow-lg overflow-hidden bg-white">
             <Image
-              src={item.src}
-              alt={item.alt}
+              src="/images/reception.jpg"
+              alt="Elegant Reception"
               width={600}
               height={400}
-              className="object-cover w-full h-[250px]"
+              className="w-full h-64 object-cover"
             />
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition">
-              <p className="text-white text-lg font-medium">{item.caption}</p>
+            <div className="p-4 text-center">
+              <h3 className="font-serif text-xl text-[#2E6B4F]">
+                Elegant Reception
+              </h3>
             </div>
           </div>
-        ))}
+
+          {/* Image 2 */}
+          <div className="rounded-2xl shadow-lg overflow-hidden bg-white">
+            <Image
+              src="/images/team.jpg"
+              alt="Dedicated Team"
+              width={600}
+              height={400}
+              className="w-full h-64 object-cover"
+            />
+            <div className="p-4 text-center">
+              <h3 className="font-serif text-xl text-[#2E6B4F]">
+                Dedicated Team
+              </h3>
+            </div>
+          </div>
+
+          {/* Image 3 */}
+          <div className="rounded-2xl shadow-lg overflow-hidden bg-white">
+            <Image
+              src="/images/garden.jpg"
+              alt="Tranquil Gardens"
+              width={600}
+              height={400}
+              className="w-full h-64 object-cover"
+            />
+            <div className="p-4 text-center">
+              <h3 className="font-serif text-xl text-[#2E6B4F]">
+                Tranquil Gardens
+              </h3>
+            </div>
+          </div>
+
+          {/* Image 4 */}
+          <div className="rounded-2xl shadow-lg overflow-hidden bg-white">
+            <Image
+              src="/images/lounge.jpg"
+              alt="Relaxing Lounge"
+              width={600}
+              height={400}
+              className="w-full h-64 object-cover"
+            />
+            <div className="p-4 text-center">
+              <h3 className="font-serif text-xl text-[#2E6B4F]">
+                Relaxing Lounge
+              </h3>
+            </div>
+          </div>
+
+          {/* Image 5 */}
+          <div className="rounded-2xl shadow-lg overflow-hidden bg-white">
+            <Image
+              src="/images/deluxe.jpg"
+              alt="Luxury Rooms"
+              width={600}
+              height={400}
+              className="w-full h-64 object-cover"
+            />
+            <div className="p-4 text-center">
+              <h3 className="font-serif text-xl text-[#2E6B4F]">Luxury Rooms</h3>
+            </div>
+          </div>
+
+          {/* Image 6 */}
+          <div className="rounded-2xl shadow-lg overflow-hidden bg-white">
+            <Image
+              src="/images/family.jpg"
+              alt="Family Comfort"
+              width={600}
+              height={400}
+              className="w-full h-64 object-cover"
+            />
+            <div className="p-4 text-center">
+              <h3 className="font-serif text-xl text-[#2E6B4F]">
+                Family Comfort
+              </h3>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );
