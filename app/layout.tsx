@@ -1,16 +1,16 @@
-// app/layout.tsx
 import "./globals.css";
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-export const metadata = {
+export const metadata: Metadata = {
+  metadataBase: new URL("https://serenova.ro"),
   title: "Serenova Eco Village – Modern Eco-Luxury Resort",
   description: "Eco-friendly modular homes with modern comfort and natural serenity.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
   openGraph: {
     title: "Serenova Eco Village",
     description: "Eco-friendly modular homes with modern comfort and natural serenity.",
-    url: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+    url: "https://serenova.ro",
     siteName: "Serenova",
     images: [{ url: "/images/og-image.jpg", width: 1200, height: 630, alt: "Serenova Eco Village" }],
     type: "website",
