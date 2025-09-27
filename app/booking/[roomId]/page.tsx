@@ -1,99 +1,81 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import { useParams } from "next/navigation";
-import { rooms } from "@/lib/rooms";
+import Image from "next/image";
 import { motion } from "framer-motion";
+import { rooms } from "@/lib/rooms";
 
-export default function BookingPage() {
-  const { roomId } = useParams<{ roomId: string }>();
+export default function RoomPage() {
+  const { roomId } = useParams();
   const room = rooms.find((r) => r.id === roomId);
-
-  const [guests, setGuests] = useState(1);
-  const [nights, setNights] = useState(1);
 
   if (!room) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-cream text-deep-forest">
-        <h1 className="text-3xl font-serif">Room not found</h1>
-      </div>
+      <main className="min-h-screen flex items-center justify-center bg-cream text-deep-forest">
+        <div className="text-center max-w-md">
+          <h1 className="font-serif text-4xl mb-3">Room not found</h1>
+          <p className="text-neutral-600 mb-6">
+            The room you’re looking for doesn’t exist or may have been removed.
+          </p>
+          <a
+            href="/booking"
+            className="inline-block rounded-xl px-6 py-3 bg-sereno-green text-white hover:bg-[#24523d] transition"
+          >
+            Back to Booking
+          </a>
+        </div>
+      </main>
     );
   }
 
-  const totalPrice = room.price * nights;
-
   return (
-    <main className="bg-cream min-h-screen text-deep-forest pt-24 px-6 md:px-20">
-      <div className="grid md:grid-cols-2 gap-12 items-start">
+    <main className="bg-cream text-deep-forest min-h-screen pt-24 px-6 md:px-20">
+      <motion.div
+        className="grid md:grid-cols-2 gap-12 items-center"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
         {/* Room Image */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.7 }}
         >
           <Image
-            src={room.image}
+            src={`/images/${room.image}`}
             alt={room.name}
             width={800}
             height={600}
-            className="rounded-2xl shadow-lg object-cover w-full"
+            className="rounded-2xl shadow-lg object-cover"
           />
         </motion.div>
 
-        {/* Booking Details */}
+        {/* Room Details */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="space-y-6"
+          transition={{ delay: 0.5, duration: 0.8 }}
         >
-          <h1 className="font-serif text-4xl text-sereno-green">{room.name}</h1>
-          <p className="text-lg text-neutral-700">{room.description}</p>
-
-          <div className="text-xl text-neutral-800">
-            <span className="font-semibold">€{room.price}</span> / night
-          </div>
-
-          {/* Guests */}
-          <div>
-            <label className="block mb-2 font-medium">Guests</label>
-            <input
-              type="number"
-              min={1}
-              max={room.maxGuests}
-              value={guests}
-              onChange={(e) => setGuests(Number(e.target.value))}
-              className="w-24 border rounded-lg px-3 py-2"
-            />
-            <p className="text-sm text-neutral-600">
-              Max {room.maxGuests} guests
-            </p>
-          </div>
-
-          {/* Nights */}
-          <div>
-            <label className="block mb-2 font-medium">Nights</label>
-            <input
-              type="number"
-              min={1}
-              value={nights}
-              onChange={(e) => setNights(Number(e.target.value))}
-              className="w-24 border rounded-lg px-3 py-2"
-            />
-          </div>
-
-          {/* Price */}
-          <div className="text-lg font-semibold">
-            Total: €{totalPrice.toFixed(2)}
-          </div>
-
-          {/* Button */}
-          <button className="px-6 py-3 rounded-xl bg-sereno-green text-white hover:bg-[#24523d] transition">
+          <h1 className="font-serif text-4xl mb-4 text-sereno-green">
+            {room.name}
+          </h1>
+          <p className="text-lg text-neutral-700 mb-6">
+            {room.description ||
+              "Enjoy a luxurious stay in this eco-friendly retreat, combining comfort with sustainability."}
+          </p>
+          <p className="text-xl font-medium mb-4">€{room.price} / night</p>
+          <p className="text-neutral-600 mb-6">
+            Maximum guests: {room.maxGuests}
+          </p>
+          <a
+            href="/checkout"
+            className="inline-block px-8 py-4 rounded-xl bg-sereno-green text-white hover:bg-[#24523d] transition text-lg"
+          >
             Proceed to Payment
-          </button>
+          </a>
         </motion.div>
-      </div>
+      </motion.div>
     </main>
   );
 }
