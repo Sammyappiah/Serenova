@@ -17,10 +17,24 @@ const config: Config = {
         sans: ["system-ui", "Segoe UI", "Helvetica", "Arial", "sans-serif"]
       },
       boxShadow: {
-        soft: "0 4px 10px rgba(0,0,0,0.08)"
-      }
-    }
-  },
-  plugins: []
-};
-export default config;
+      colors: {
+        "sereno-green": "#2E6B4F",
+        "deep-forest": "#0F1915",
+        cream: "#FAF8F5"
+      },
+      fontFamily: {
+        serif: ["Georgia", "Cambria", "Times New Roman", "serif"],
+        sans: ["system-ui", "Segoe UI", "Helvetica", "Arial", "sans-serif"]
+      },
+      boxShadow: {
+        // keep your existing shadows or add new ones
+      },
+      keyframes: {
+        fadeUp: {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        fadeUp: "fadeUp 1s ease-out forwards",
+      },
