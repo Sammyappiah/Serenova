@@ -1,6 +1,13 @@
-// lib/rooms.ts
+export type Room = {
+  id: string;
+  name: string;
+  price: number;
+  maxGuests: number;
+  image: string;
+  description: string;
+};
 
-export const rooms = [
+export const rooms: Room[] = [
   {
     id: "accessible",
     name: "Accessible Suite",
@@ -8,7 +15,7 @@ export const rooms = [
     maxGuests: 2,
     image: "/images/accessible.jpg",
     description:
-      "Spacious suite with full accessibility features, eco-friendly design, and modern comfort."
+      "Designed with accessibility in mind, this suite provides comfort and inclusivity with step-free access and modern eco-friendly amenities.",
   },
   {
     id: "deluxe",
@@ -17,7 +24,7 @@ export const rooms = [
     maxGuests: 2,
     image: "/images/deluxe.jpg",
     description:
-      "Elegant deluxe room blending sustainable materials with refined style and serene views."
+      "A refined room with elegant design, natural light, and sustainable features for a relaxing eco-luxury experience.",
   },
   {
     id: "family",
@@ -26,6 +33,6 @@ export const rooms = [
     maxGuests: 4,
     image: "/images/family.jpg",
     description:
-      "Generous family room offering space, eco-conscious amenities, and a relaxing atmosphere."
-  }
+      "Spacious and welcoming, perfect for families or groups, offering eco-conscious comfort and plenty of room to unwind.",
+  },
 ];
