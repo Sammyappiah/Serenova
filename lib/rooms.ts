@@ -15,7 +15,7 @@ export const rooms: Room[] = [
     maxGuests: 2,
     image: "/images/accessible.jpg",
     description:
-      "Designed with accessibility in mind, this suite provides comfort and inclusivity with step-free access and modern eco-friendly amenities.",
+      "Designed for comfort and accessibility, this eco-friendly suite offers step-free access, spacious interiors, and modern amenities for a seamless stay.",
   },
   {
     id: "deluxe",
@@ -24,7 +24,7 @@ export const rooms: Room[] = [
     maxGuests: 2,
     image: "/images/deluxe.jpg",
     description:
-      "A refined room with elegant design, natural light, and sustainable features for a relaxing eco-luxury experience.",
+      "Our deluxe room combines modern luxury with sustainable design. Perfect for couples, it features serene views, plush bedding, and natural finishes.",
   },
   {
     id: "family",
@@ -33,6 +33,6 @@ export const rooms: Room[] = [
     maxGuests: 4,
     image: "/images/family.jpg",
     description:
-      "Spacious and welcoming, perfect for families or groups, offering eco-conscious comfort and plenty of room to unwind.",
+      "Spacious and welcoming, the family room provides ample space for groups or families, with eco-conscious materials and a cozy atmosphere.",
   },
 ];
