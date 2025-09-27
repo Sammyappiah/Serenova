@@ -1,102 +1,98 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { useParams } from "next/navigation";
+import { rooms } from "@/lib/rooms";
+import { motion } from "framer-motion";
 
-const rooms = [
-  { id: "accessible", name: "Accessible Suite", price: 70, maxGuests: 2, image: "/images/accessible.jpg" },
-  { id: "deluxe", name: "Deluxe Room", price: 70, maxGuests: 3, image: "/images/deluxe.jpg" },
-  { id: "family", name: "Family Room", price: 85, maxGuests: 5, image: "/images/family.jpg" },
-];
+export default function BookingPage() {
+  const { roomId } = useParams<{ roomId: string }>();
+  const room = rooms.find((r) => r.id === roomId);
 
-function nightsBetween(start: string, end: string) {
-  const s = new Date(start);
-  const e = new Date(end);
-  const diff = e.getTime() - s.getTime();
-  return diff > 0 ? diff / (1000 * 60 * 60 * 24) : 0;
-}
-
-export default function RoomPage({ params }: { params: { roomId: string } }) {
-  const router = useRouter();
-  const room = rooms.find((r) => r.id === params.roomId);
-
-  const today = new Date().toISOString().split("T")[0];
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(1);
+  const [nights, setNights] = useState(1);
 
-  if (!room) return <div className="p-10">Room not found</div>;
+  if (!room) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-cream text-deep-forest">
+        <h1 className="text-3xl font-serif">Room not found</h1>
+      </div>
+    );
+  }
 
-  const total = checkIn && checkOut ? nightsBetween(checkIn, checkOut) * room.price : 0;
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (total > 0) {
-      router.push(
-        `/checkout?room=${room.id}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&total=${total}`
-      );
-    }
-  };
+  const totalPrice = room.price * nights;
 
   return (
-    <main className="min-h-screen bg-[#FAF8F5] text-[#0F1915] px-6 py-16">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-start">
-        <img src={room.image} alt={room.name} className="w-full h-[400px] object-cover rounded-2xl shadow-lg" />
+    <main className="bg-cream min-h-screen text-deep-forest pt-24 px-6 md:px-20">
+      <div className="grid md:grid-cols-2 gap-12 items-start">
+        {/* Room Image */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Image
+            src={room.image}
+            alt={room.name}
+            width={800}
+            height={600}
+            className="rounded-2xl shadow-lg object-cover w-full"
+          />
+        </motion.div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-8 space-y-6">
-          <h1 className="font-serif text-4xl mb-2 text-[#2E6B4F]">{room.name}</h1>
-          <p className="text-neutral-600 mb-4">€{room.price} / night</p>
+        {/* Booking Details */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="space-y-6"
+        >
+          <h1 className="font-serif text-4xl text-sereno-green">{room.name}</h1>
+          <p className="text-lg text-neutral-700">{room.description}</p>
 
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-1">Check-in</label>
-            <input
-              type="date"
-              min={today}
-              value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
-              className="w-full border rounded-lg px-3 py-2"
-              required
-            />
+          <div className="text-xl text-neutral-800">
+            <span className="font-semibold">€{room.price}</span> / night
           </div>
 
+          {/* Guests */}
           <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-1">Check-out</label>
-            <input
-              type="date"
-              min={checkIn || today}
-              value={checkOut}
-              onChange={(e) => setCheckOut(e.target.value)}
-              className="w-full border rounded-lg px-3 py-2"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-1">Guests</label>
+            <label className="block mb-2 font-medium">Guests</label>
             <input
               type="number"
               min={1}
               max={room.maxGuests}
               value={guests}
-              onChange={(e) => setGuests(parseInt(e.target.value))}
-              className="w-full border rounded-lg px-3 py-2"
-              required
+              onChange={(e) => setGuests(Number(e.target.value))}
+              className="w-24 border rounded-lg px-3 py-2"
             />
-            <p className="text-xs text-neutral-500 mt-1">Max {room.maxGuests} guests</p>
+            <p className="text-sm text-neutral-600">
+              Max {room.maxGuests} guests
+            </p>
           </div>
 
-          <p className="text-lg font-medium text-[#2E6B4F]">
-            Total: {total > 0 ? `€${total}` : "—"}
-          </p>
+          {/* Nights */}
+          <div>
+            <label className="block mb-2 font-medium">Nights</label>
+            <input
+              type="number"
+              min={1}
+              value={nights}
+              onChange={(e) => setNights(Number(e.target.value))}
+              className="w-24 border rounded-lg px-3 py-2"
+            />
+          </div>
 
-          <button
-            type="submit"
-            disabled={total === 0}
-            className="w-full py-3 rounded-xl bg-[#2E6B4F] text-white text-lg font-medium hover:bg-[#24523d] transition disabled:opacity-50"
-          >
-            Continue to Reservation
+          {/* Price */}
+          <div className="text-lg font-semibold">
+            Total: €{totalPrice.toFixed(2)}
+          </div>
+
+          {/* Button */}
+          <button className="px-6 py-3 rounded-xl bg-sereno-green text-white hover:bg-[#24523d] transition">
+            Proceed to Payment
           </button>
-        </form>
+        </motion.div>
       </div>
     </main>
   );
