@@ -1,76 +1,101 @@
 "use client";
 
-import { Elements } from "@stripe/react-stripe-js";
+import { Elements, CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import PaymentForm from "@/components/PaymentForm";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
-);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "pk_test_12345");
 
-export default function CheckoutPage({ searchParams }: { searchParams: any }) {
-  const { room, dates, guests, total } = searchParams;
-  const [guestName, setGuestName] = useState("");
-  const [guestEmail, setGuestEmail] = useState("");
-  const [guestPhone, setGuestPhone] = useState("");
-  const [specialRequests, setSpecialRequests] = useState("");
+function CheckoutForm() {
+  const stripe = useStripe();
+  const elements = useElements();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [phone, setPhone] = useState("");
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // NOTE: This demo just navigates to confirmation.
+    // Integrate real PaymentIntent/Checkout Session on your server for production.
+    setTimeout(() => {
+      setLoading(false);
+      router.push("/confirmation");
+    }, 800);
+  };
 
   return (
-    <div className="max-w-3xl mx-auto py-12 px-6">
-      <h1 className="text-3xl font-serif mb-10 text-center">Checkout</h1>
-
-      {/* Booking Summary */}
-      <div className="bg-white shadow-md rounded-2xl p-6 mb-10">
-        <h2 className="text-xl font-semibold mb-4">Booking Summary</h2>
-        <p><strong>Room:</strong> {room || "Not specified"}</p>
-        <p><strong>Dates:</strong> {dates || "Not specified"}</p>
-        <p><strong>Guests:</strong> {guests || "Not specified"}</p>
-        <p className="text-lg font-bold mt-2">Total: €{total || 0}</p>
+    <form onSubmit={submit} className="space-y-6">
+      <div>
+        <label className="block text-sm font-medium mb-2">Full Name</label>
+        <input
+          required
+          type="text"
+          className="w-full rounded-xl border border-black/10 px-4 py-3 bg-white"
+          placeholder="Jane Doe"
+        />
       </div>
 
-      {/* Guest Details Form */}
-      <div className="bg-white shadow-md rounded-2xl p-6 mb-10">
-        <h2 className="text-xl font-semibold mb-4">Guest Details</h2>
-        <form className="space-y-4">
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={guestName}
-            onChange={(e) => setGuestName(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-700"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={guestEmail}
-            onChange={(e) => setGuestEmail(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-700"
-          />
-          <input
-            type="tel"
-            placeholder="Phone"
-            value={guestPhone}
-            onChange={(e) => setGuestPhone(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-700"
-          />
-          <textarea
-            placeholder="Special Requests"
-            value={specialRequests}
-            onChange={(e) => setSpecialRequests(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-700"
-            rows={3}
-          />
-        </form>
+      <div>
+        <label className="block text-sm font-medium mb-2">Email</label>
+        <input
+          required
+          type="email"
+          className="w-full rounded-xl border border-black/10 px-4 py-3 bg-white"
+          placeholder="jane@example.com"
+        />
       </div>
 
-      {/* Payment Section */}
-      <div className="bg-white shadow-md rounded-2xl p-6">
-        <h2 className="text-xl font-semibold mb-4">Payment</h2>
+      <div>
+        <label className="block text-sm font-medium mb-2">Phone (International)</label>
+        <input
+          required
+          type="tel"
+          inputMode="tel"
+          pattern="^[0-9+() -]{7,}$"
+          className="w-full rounded-xl border border-black/10 px-4 py-3 bg-white"
+          placeholder="+44 7700 900123"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+        <p className="text-xs text-neutral-500 mt-1">
+          Include country code, e.g. +44, +33, +1.
+        </p>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-2">Card</label>
+        <div className="rounded-xl border border-black/10 px-3 py-3 bg-white">
+          <CardElement options={{ hidePostalCode: false }} />
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        disabled={!stripe || !elements || loading}
+        className="btn-primary w-full"
+      >
+        {loading ? "Processing…" : "Confirm & Pay"}
+      </button>
+
+      <p className="text-xs text-neutral-500">
+        Test-only UI. Replace with real server payment flow before going live.
+      </p>
+    </form>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <main className="px-6 md:px-20 py-16">
+      <div className="max-w-xl mx-auto">
+        <h1 className="font-serif text-4xl mb-6 text-sereno-green">Checkout</h1>
         <Elements stripe={stripePromise}>
-          <PaymentForm total={Number(total) || 0} />
+          <CheckoutForm />
         </Elements>
       </div>
-    </div>
+    </main>
   );
 }
