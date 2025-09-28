@@ -7,34 +7,39 @@ import Link from "next/link";
 import { rooms } from "@/lib/rooms";
 
 export default function RoomPage() {
-  const { roomId } = useParams();
+  const params = useParams();
+  const { roomId } = params;
+
   const room = rooms.find((r) => r.id === roomId);
 
   if (!room) {
     return (
-      <main className="p-12 text-center">
-        <h1 className="text-2xl font-bold text-red-600">Room not found</h1>
+      <main className="bg-cream text-deep-forest min-h-screen flex items-center justify-center">
+        <p className="text-xl">Room not found.</p>
       </main>
     );
   }
 
   return (
-    <main className="bg-cream min-h-screen p-6 md:p-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    <main className="bg-cream text-deep-forest min-h-screen p-8">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        {/* Left: Room image */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
+          className="rounded-2xl overflow-hidden shadow-lg"
         >
           <Image
-            src={`/${room.image}`}
+            src={room.image}
             alt={room.name}
-            width={700}
-            height={500}
-            className="rounded-2xl shadow-lg w-full h-auto object-cover"
+            width={800}
+            height={600}
+            className="w-full h-auto object-cover"
           />
         </motion.div>
 
+        {/* Right: Room details */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
