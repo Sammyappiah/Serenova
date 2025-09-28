@@ -16,25 +16,24 @@ const config: Config = {
         serif: ["Georgia", "Cambria", "Times New Roman", "serif"],
         sans: ["system-ui", "Segoe UI", "Helvetica", "Arial", "sans-serif"]
       },
-      boxShadow: {
-      colors: {
-        "sereno-green": "#2E6B4F",
-        "deep-forest": "#0F1915",
-        cream: "#FAF8F5"
-      },
-      fontFamily: {
-        serif: ["Georgia", "Cambria", "Times New Roman", "serif"],
-        sans: ["system-ui", "Segoe UI", "Helvetica", "Arial", "sans-serif"]
-      },
-      boxShadow: {
-        // keep your existing shadows or add new ones
-      },
       keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" }
+        },
         fadeUp: {
           "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
+          "100%": { opacity: "1", transform: "translateY(0)" }
+        }
       },
       animation: {
-        fadeUp: "fadeUp 1s ease-out forwards",
-      },
+        fadeIn: "fadeIn 1.5s ease-out forwards",
+        fadeUp: "fadeUp 1.2s ease-out forwards"
+      }
+    }
+  },
+  plugins: []
+};
+
+export default config;
+
