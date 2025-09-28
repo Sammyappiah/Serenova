@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone', // ensures server build, no static export
+  output: 'standalone',   // forces server build
+  trailingSlash: false,
 };
 
 module.exports = nextConfig;
