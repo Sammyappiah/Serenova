@@ -9,6 +9,7 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm">
       <nav className="container mx-auto flex h-16 items-center justify-between px-6">
+        {/* Logo */}
         <Link
           href="/"
           className="font-serif text-2xl text-sereno-green tracking-wide"
