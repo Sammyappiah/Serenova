@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
-  output: 'standalone', // ensure no static export with /500.html
+  output: 'standalone', // ensures server build, no static export
 };
 
 module.exports = nextConfig;
