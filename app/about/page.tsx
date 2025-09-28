@@ -4,80 +4,40 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function AboutPage() {
+  const images = [
+    { src: "/amenities/reception.jpg", alt: "Reception" },
+    { src: "/amenities/team.jpg", alt: "Team" },
+    { src: "/amenities/garden.jpg", alt: "Garden" },
+    { src: "/amenities/lounge.jpg", alt: "Lounge" },
+  ];
+
   return (
-    <main className="bg-cream text-deep-forest">
-      <section className="max-w-6xl mx-auto px-6 py-16">
-        <motion.h1
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl font-serif mb-8 text-center"
-        >
-          About Serenova
-        </motion.h1>
-
-        <p className="text-lg text-neutral-700 mb-12 text-center max-w-3xl mx-auto">
-          Serenova is more than just a retreat — it’s a sanctuary for rest,
-          wellness, and eco-conscious living. Our mission is to blend modern
-          luxury with sustainable hospitality.
+    <main className="bg-cream text-deep-forest min-h-screen">
+      <section className="max-w-6xl mx-auto py-16 px-6">
+        <h1 className="text-4xl font-serif text-sereno-green mb-8">About Us</h1>
+        <p className="text-lg text-neutral-700 mb-12">
+          At Serenova, we believe luxury and sustainability can live side by
+          side. Our retreat offers a space to reconnect with nature and enjoy
+          refined hospitality.
         </p>
-
-        <div className="space-y-12">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Image
-              src="/reception.jpg"
-              alt="Reception"
-              width={1200}
-              height={800}
-              className="w-full h-[400px] object-cover rounded-2xl shadow-lg"
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Image
-              src="/team.jpg"
-              alt="Our Team"
-              width={1200}
-              height={800}
-              className="w-full h-[400px] object-cover rounded-2xl shadow-lg"
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Image
-              src="/garden.jpg"
-              alt="Garden"
-              width={1200}
-              height={800}
-              className="w-full h-[400px] object-cover rounded-2xl shadow-lg"
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Image
-              src="/lounge.jpg"
-              alt="Lounge"
-              width={1200}
-              height={800}
-              className="w-full h-[400px] object-cover rounded-2xl shadow-lg"
-            />
-          </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {images.map((img, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <Image
+                src={img.src}
+                alt={img.alt}
+                width={800}
+                height={600}
+                className="rounded-2xl shadow-lg object-cover w-full h-[300px]"
+              />
+            </motion.div>
+          ))}
         </div>
       </section>
     </main>

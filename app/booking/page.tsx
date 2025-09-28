@@ -7,18 +7,19 @@ import { rooms } from "@/lib/rooms";
 
 export default function BookingPage() {
   return (
-    <main className="bg-cream min-h-screen py-16 px-6">
-      <h1 className="text-4xl font-serif text-center text-sereno-green mb-12">
-        Choose Your Room
+    <main className="bg-cream text-deep-forest min-h-screen py-16 px-6">
+      <h1 className="text-4xl font-serif text-sereno-green text-center mb-12">
+        Book Your Stay
       </h1>
-      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {rooms.map((room) => (
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {rooms.map((room, i) => (
           <motion.div
             key={room.id}
-            className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: i * 0.2 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-2xl shadow-md overflow-hidden"
           >
             <Image
               src={room.image}
@@ -28,18 +29,15 @@ export default function BookingPage() {
               className="w-full h-56 object-cover"
             />
             <div className="p-6">
-              <h2 className="text-2xl font-serif text-deep-forest mb-2">
-                {room.name}
-              </h2>
-              <p className="text-neutral-700 mb-4">{room.description}</p>
-              <p className="font-semibold mb-4">
+              <h2 className="text-2xl font-serif mb-2">{room.name}</h2>
+              <p className="text-neutral-700 mb-4">
                 €{room.price} / night · up to {room.maxGuests} guests
               </p>
               <Link
                 href={`/booking/${room.id}`}
-                className="inline-block px-4 py-2 rounded-lg bg-sereno-green text-white hover:bg-[#24523d] transition"
+                className="inline-block px-4 py-2 rounded-xl bg-sereno-green text-white hover:bg-[#24523d] transition"
               >
-                Book Now
+                View Room
               </Link>
             </div>
           </motion.div>

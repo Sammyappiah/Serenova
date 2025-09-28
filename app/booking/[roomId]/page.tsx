@@ -7,9 +7,7 @@ import Link from "next/link";
 import { rooms } from "@/lib/rooms";
 
 export default function RoomPage() {
-  const params = useParams();
-  const { roomId } = params;
-
+  const { roomId } = useParams();
   const room = rooms.find((r) => r.id === roomId);
 
   if (!room) {
@@ -21,31 +19,29 @@ export default function RoomPage() {
   }
 
   return (
-    <main className="bg-cream text-deep-forest min-h-screen p-8">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        {/* Left: Room image */}
+    <main className="bg-cream text-deep-forest min-h-screen py-16 px-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="rounded-2xl overflow-hidden shadow-lg"
         >
           <Image
             src={room.image}
             alt={room.name}
-            width={800}
-            height={600}
-            className="w-full h-auto object-cover"
+            width={600}
+            height={400}
+            className="rounded-2xl shadow-lg object-cover w-full h-[350px]"
           />
         </motion.div>
-
-        {/* Right: Room details */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="font-serif text-4xl mb-4 text-sereno-green">{room.name}</h1>
+          <h1 className="font-serif text-4xl mb-4 text-sereno-green">
+            {room.name}
+          </h1>
           <p className="text-lg text-neutral-700 mb-6">{room.description}</p>
           <p className="text-xl font-semibold mb-6">
             €{room.price} / night · up to {room.maxGuests} guests

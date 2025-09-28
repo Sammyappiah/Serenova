@@ -1,13 +1,15 @@
-import Link from "next/link";
-
 export default function ConfirmationPage() {
   return (
-    <main className="px-6 md:px-20 py-24 text-center">
-      <h1 className="font-serif text-4xl mb-4 text-sereno-green">Booking Confirmed</h1>
-      <p className="text-neutral-700 mb-8">
-        Thank you! A confirmation email is on its way. We can’t wait to host you.
-      </p>
-      <Link href="/" className="btn-primary">Back to Home</Link>
+    <main className="bg-cream text-deep-forest min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-3xl font-serif text-sereno-green mb-4">
+          Booking Confirmed!
+        </h1>
+        <p className="text-lg text-neutral-700">
+          Thank you for choosing Serenova. A confirmation email has been sent to
+          your inbox.
+        </p>
+      </div>
     </main>
   );
 }
