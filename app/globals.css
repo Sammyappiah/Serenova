@@ -2,22 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global font smoothing */
-html, body {
-  @apply bg-cream text-deep-forest antialiased;
-}
-
-/* Navbar link styling */
+/* Premium link treatments */
 .nav-link {
-  @apply text-neutral-700 hover:text-sereno-green transition-colors;
+  @apply text-neutral-700 hover:text-sereno-green transition;
 }
-
-/* Footer link styling */
 .footer-link {
-  @apply text-neutral-700 hover:text-sereno-green transition-colors;
+  @apply text-neutral-700 hover:text-sereno-green transition;
 }
 
 /* Mobile dropdown links */
 .mobile-link {
-  @apply block py-2 text-lg text-deep-forest hover:text-sereno-green transition-colors;
+  @apply text-deep-forest hover:text-sereno-green transition;
 }
+
+/* Page spacing below fixed navbar */
+:root { --nav-h: 64px; }
+main { padding-top: var(--nav-h); }
+
+/* Smooth text */
+html { scroll-behavior: smooth; }

@@ -1,26 +1,42 @@
-export const rooms = [
+export type Room = {
+  id: string;
+  name: string;
+  price: number;
+  maxGuests: number;
+  image: string;
+  short: string;
+  description: string;
+};
+
+export const rooms: Room[] = [
   {
     id: "accessible",
     name: "Accessible Suite",
-    price: 120,
+    price: 70,
     maxGuests: 2,
-    image: "/accessible.jpg",
-    description: "A spacious suite designed with accessibility in mind, featuring step-free access and modern amenities."
+    image: "/images/rooms/accessible.jpg",
+    short: "Step-free luxury with thoughtful accessibility.",
+    description:
+      "Our Accessible Suite offers generous, barrier-free design with roll-in shower, wider clearances, and calming natural finishes. An effortless, restorative stay.",
   },
   {
     id: "deluxe",
     name: "Deluxe Room",
-    price: 150,
-    maxGuests: 3,
-    image: "/deluxe.jpg",
-    description: "A deluxe room with elegant furnishings, a queen bed, and views of the surrounding gardens."
+    price: 70,
+    maxGuests: 2,
+    image: "/images/rooms/deluxe.jpg",
+    short: "Minimal, elegant comfort with garden views.",
+    description:
+      "A refined, light-filled space furnished with natural woods and organic textiles. Wake to birdsong and the soft glow of the gardens.",
   },
   {
     id: "family",
     name: "Family Room",
-    price: 200,
-    maxGuests: 5,
-    image: "/family.jpg",
-    description: "Perfect for families, offering extra space, multiple beds, and a cozy seating area."
-  }
+    price: 85,
+    maxGuests: 4,
+    image: "/images/rooms/family.jpg",
+    short: "Spacious layout ideal for families.",
+    description:
+      "Room to unwind together. Separate sleeping zones, generous storage, and cozy lounge area—perfect after a day wandering the village.",
+  },
 ];

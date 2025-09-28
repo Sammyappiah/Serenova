@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    unoptimized: false,
+  experimental: {
+    appDir: true,
   },
-  reactStrictMode: true,
+  output: 'standalone', // ensure no static export with /500.html
 };
+
 module.exports = nextConfig;

@@ -6,10 +6,10 @@ export default function Footer() {
       <div className="container mx-auto py-10 text-center">
         <div className="font-serif text-xl mb-4">SERENOVA</div>
         <div className="flex items-center justify-center gap-6 mb-4 text-sm">
-          <Link href="/" className="footer-link">Home</Link>
-          <Link href="/about" className="footer-link">About</Link>
-          <Link href="/booking" className="footer-link">Booking</Link>
-          <Link href="/contact" className="footer-link">Contact</Link>
+          <Link className="footer-link" href="/">Home</Link>
+          <Link className="footer-link" href="/about">About</Link>
+          <Link className="footer-link" href="/booking">Booking</Link>
+          <Link className="footer-link" href="/contact">Contact</Link>
         </div>
         <div className="flex items-center justify-center gap-5 mb-4">
           <a aria-label="Instagram" href="#" target="_blank" rel="noreferrer">📸</a>

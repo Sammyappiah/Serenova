@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react"; // If you don't have lucide-react, replace with simple SVGs or remove.
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm">
+    <header className="fixed inset-x-0 top-0 z-50 bg-white/95 backdrop-blur border-b border-black/10">
       <nav className="container mx-auto flex h-16 items-center justify-between px-6">
         <Link href="/" className="font-serif text-2xl text-sereno-green tracking-wide">
           Serenova
@@ -16,31 +17,50 @@ export default function Navbar() {
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/" className="nav-link">Home</Link>
-          <Link href="/about" className="nav-link">About</Link>
-          <Link href="/booking" className="nav-link">Booking</Link>
-          <Link href="/contact" className="nav-link">Contact</Link>
+          <Link className="nav-link" href="/">Home</Link>
+          <Link className="nav-link" href="/about">About</Link>
+          <Link className="nav-link" href="/booking">Booking</Link>
+          <Link className="nav-link" href="/contact">Contact</Link>
         </div>
 
         {/* Mobile toggle */}
         <button
-          aria-label="Open Menu"
-          className="md:hidden p-2 rounded hover:bg-neutral-100"
+          aria-label="Open menu"
+          className="md:hidden p-2 rounded-xl border border-black/10"
           onClick={() => setIsOpen((s) => !s)}
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          {isOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </nav>
 
-      {/* Mobile Dropdown */}
-      {isOpen && (
-        <div className="md:hidden bg-white shadow-md px-6 py-4 flex flex-col gap-4 animate-slideDown">
-          <Link href="/" onClick={() => setIsOpen(false)} className="mobile-link">Home</Link>
-          <Link href="/about" onClick={() => setIsOpen(false)} className="mobile-link">About</Link>
-          <Link href="/booking" onClick={() => setIsOpen(false)} className="mobile-link">Booking</Link>
-          <Link href="/contact" onClick={() => setIsOpen(false)} className="mobile-link">Contact</Link>
-        </div>
-      )}
+      {/* Mobile dropdown */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key="mobile"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="md:hidden bg-white shadow-md px-6 py-4"
+          >
+            <div className="flex flex-col gap-4">
+              <Link href="/" className="mobile-link" onClick={() => setIsOpen(false)}>
+                Home
+              </Link>
+              <Link href="/about" className="mobile-link" onClick={() => setIsOpen(false)}>
+                About
+              </Link>
+              <Link href="/booking" className="mobile-link" onClick={() => setIsOpen(false)}>
+                Booking
+              </Link>
+              <Link href="/contact" className="mobile-link" onClick={() => setIsOpen(false)}>
+                Contact
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

@@ -17,26 +17,17 @@ const config: Config = {
         sans: ["system-ui", "Segoe UI", "Helvetica", "Arial", "sans-serif"],
       },
       keyframes: {
-        fadeUp: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        slideDown: {
-          "0%": { opacity: "0", transform: "translateY(-8px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
+        fadeUp: { "0%": { opacity: "0", transform: "translateY(12px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
+        slideDown: { "0%": { height: "0", opacity: "0" }, "100%": { height: "var(--content)", opacity: "1" } },
+        fadeIn: { from: { opacity: "0" }, to: { opacity: "1" } },
       },
       animation: {
         fadeUp: "fadeUp .6s ease-out both",
         slideDown: "slideDown .25s ease-out both",
-        fadeIn: "fadeIn .5s ease-out both",
+        fadeIn: "fadeIn .4s ease-out both",
       },
       boxShadow: {
-        soft: "0 10px 30px rgba(0,0,0,.08)",
+        lux: "0 10px 30px rgba(0,0,0,.08)",
       },
     },
   },
