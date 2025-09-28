@@ -1,6 +1,6 @@
 "use client";
 
-export default function ErrorPage() {
+export default function ErrorPage({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-cream text-deep-forest">
       <div className="text-center">
@@ -8,12 +8,12 @@ export default function ErrorPage() {
         <p className="text-lg mb-6">
           Something went wrong. Please try again later.
         </p>
-        <a
-          href="/"
+        <button
+          onClick={() => reset()}
           className="px-6 py-3 rounded-xl bg-sereno-green text-white hover:bg-[#24523d] transition"
         >
-          Back to Home
-        </a>
+          Try Again
+        </button>
       </div>
     </main>
   );
