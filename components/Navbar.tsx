@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,35 +20,59 @@ export default function Navbar() {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/" className="nav-link">Home</Link>
-          <Link href="/about" className="nav-link">About</Link>
-          <Link href="/booking" className="nav-link">Booking</Link>
-          <Link href="/contact" className="nav-link">Contact</Link>
+          <Link href="/" className="hover:text-sereno-green transition">
+            Home
+          </Link>
+          <Link href="/about" className="hover:text-sereno-green transition">
+            About
+          </Link>
+          <Link href="/booking" className="hover:text-sereno-green transition">
+            Booking
+          </Link>
+          <Link href="/contact" className="hover:text-sereno-green transition">
+            Contact
+          </Link>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Toggle */}
         <button
-          className="md:hidden text-2xl"
+          className="md:hidden p-2 rounded-lg text-deep-forest hover:bg-gray-100"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
-          {isOpen ? "✕" : "☰"}
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </nav>
 
       {/* Mobile Dropdown */}
       {isOpen && (
         <div className="md:hidden bg-white shadow-md px-6 py-4 flex flex-col gap-4 animate-slideDown">
-          <Link href="/" onClick={() => setIsOpen(false)} className="mobile-link">
+          <Link
+            href="/"
+            onClick={() => setIsOpen(false)}
+            className="mobile-link"
+          >
             Home
           </Link>
-          <Link href="/about" onClick={() => setIsOpen(false)} className="mobile-link">
+          <Link
+            href="/about"
+            onClick={() => setIsOpen(false)}
+            className="mobile-link"
+          >
             About
           </Link>
-          <Link href="/booking" onClick={() => setIsOpen(false)} className="mobile-link">
+          <Link
+            href="/booking"
+            onClick={() => setIsOpen(false)}
+            className="mobile-link"
+          >
             Booking
           </Link>
-          <Link href="/contact" onClick={() => setIsOpen(false)} className="mobile-link">
+          <Link
+            href="/contact"
+            onClick={() => setIsOpen(false)}
+            className="mobile-link"
+          >
             Contact
           </Link>
         </div>
