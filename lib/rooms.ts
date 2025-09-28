@@ -1,38 +1,26 @@
-export type Room = {
-  id: string;
-  name: string;
-  price: number;
-  maxGuests: number;
-  image: string;
-  description: string;
-};
-
-export const rooms: Room[] = [
+export const rooms = [
   {
     id: "accessible",
     name: "Accessible Suite",
-    price: 70,
+    price: 120,
     maxGuests: 2,
-    image: "/images/accessible.jpg",
-    description:
-      "Thoughtfully designed suite with accessible features and serene surroundings.",
+    image: "/accessible.jpg",
+    description: "A spacious suite designed with accessibility in mind, featuring step-free access and modern amenities."
   },
   {
     id: "deluxe",
     name: "Deluxe Room",
-    price: 70,
-    maxGuests: 2,
-    image: "/images/deluxe.jpg",
-    description:
-      "A refined room offering comfort, style, and connection to nature.",
+    price: 150,
+    maxGuests: 3,
+    image: "/deluxe.jpg",
+    description: "A deluxe room with elegant furnishings, a queen bed, and views of the surrounding gardens."
   },
   {
     id: "family",
     name: "Family Room",
-    price: 85,
-    maxGuests: 4,
-    image: "/images/family.jpg",
-    description:
-      "Spacious accommodation for families with cozy interiors and garden views.",
-  },
+    price: 200,
+    maxGuests: 5,
+    image: "/family.jpg",
+    description: "Perfect for families, offering extra space, multiple beds, and a cozy seating area."
+  }
 ];
