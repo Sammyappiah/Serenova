@@ -1,11 +1,10 @@
-cat > "app/booking/[roomId]/page.tsx" <<'TSX'
 "use client";
 
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { rooms } from "@/lib/rooms";
 import Link from "next/link";
+import { rooms } from "@/lib/rooms";
 
 export default function RoomPage() {
   const { roomId } = useParams();
@@ -13,26 +12,26 @@ export default function RoomPage() {
 
   if (!room) {
     return (
-      <main className="flex items-center justify-center h-screen bg-cream">
-        <h1 className="text-2xl font-serif text-red-600">Room not found</h1>
+      <main className="p-12 text-center">
+        <h1 className="text-2xl font-bold text-red-600">Room not found</h1>
       </main>
     );
   }
 
   return (
-    <main className="bg-cream min-h-screen py-16 px-6">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <main className="bg-cream min-h-screen p-6 md:p-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
           <Image
-            src={room.image}
+            src={`/${room.image}`}
             alt={room.name}
-            width={600}
-            height={400}
-            className="rounded-2xl shadow-lg object-cover w-full"
+            width={700}
+            height={500}
+            className="rounded-2xl shadow-lg w-full h-auto object-cover"
           />
         </motion.div>
 
@@ -57,4 +56,3 @@ export default function RoomPage() {
     </main>
   );
 }
-TSX
