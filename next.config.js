@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",        // ✅ Only server build, no export
-  trailingSlash: false,        // avoid static-like paths
+  output: "standalone",   // ✅ server build only
+  trailingSlash: false,
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   experimental: { typedRoutes: true },
