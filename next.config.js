@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",   // ✅ server build only
-  trailingSlash: false,
-  eslint: { ignoreDuringBuilds: true },
-  typescript: { ignoreBuildErrors: true },
-  experimental: { typedRoutes: true },
-  reactStrictMode: true,
+  output: "standalone", // ✅ force server output
+  experimental: {
+    appDir: true,
+  },
 };
 
 module.exports = nextConfig;
