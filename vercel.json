@@ -1,0 +1,7 @@
+cat > vercel.json <<'EOF'
+{
+  "buildCommand": "next build",
+  "framework": "nextjs",
+  "outputDirectory": ".next"
+}
+EOF
