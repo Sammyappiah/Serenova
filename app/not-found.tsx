@@ -1,10 +1,8 @@
-// app/not-found.tsx
 export default function NotFound() {
   return (
-    <html>
-      <body>
-        <h1>404 – Page Not Found</h1>
-      </body>
-    </html>
+    <main style={{ padding: "2rem", textAlign: "center" }}>
+      <h1>404 – Page Not Found</h1>
+      <p>Sorry, we couldn’t find what you’re looking for.</p>
+    </main>
   );
 }
