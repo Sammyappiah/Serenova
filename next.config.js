@@ -1,12 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone", // server build only
+  output: "standalone", // 🚀 forces server output, no export
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
-  experimental: { typedRoutes: true },
-  generateBuildId: async () => "serenova-build",
-  // Prevent static HTML export of legacy error pages
-  skipTrailingSlashRedirect: true,
   reactStrictMode: true,
 };
 
