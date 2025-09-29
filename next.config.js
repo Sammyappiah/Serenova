@@ -1,4 +1,3 @@
-cat > next.config.js <<'EOF'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",        // ✅ force Node.js server build
@@ -9,4 +8,3 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-EOF
