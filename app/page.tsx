@@ -1,5 +1,6 @@
-import Home from "./home/page";
+// app/page.tsx
+import HomePage from "./home/page";
 
 export default function RootPage() {
-  return <Home />;
+  return <HomePage />;
 }
