@@ -23,19 +23,19 @@ export default function HomePage() {
           src="/deluxe.jpg"
           alt="Serenova Hotel"
           fill
-          className="object-cover brightness-75"
           priority
+          className="object-cover brightness-75"
         />
-        <div className="relative z-10 text-center text-white px-6">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
+        <div className="absolute text-center text-white px-6">
+          <h1 className="text-4xl md:text-6xl font-bold drop-shadow-lg mb-4">
             Welcome to Serenova
           </h1>
           <p className="text-xl md:text-2xl mb-6 drop-shadow-md">
-            Experience comfort, elegance, and tranquility in the heart of Romania
+            Experience comfort, elegance, and tranquility in the heart of Romania.
           </p>
           <a
             href="/booking"
-            className="bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition"
+            className="bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition"
           >
             Book Your Stay
           </a>
@@ -45,7 +45,7 @@ export default function HomePage() {
       {/* Carousel Section */}
       <section className="py-16 px-6 md:px-12 lg:px-24 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-8">Discover Serenova</h2>
-        <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-lg shadow-lg">
+        <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-xl shadow-lg">
           <div className="relative h-[400px]">
             <Image
               src={carouselImages[current].src}
@@ -53,19 +53,21 @@ export default function HomePage() {
               fill
               className="object-cover transition duration-700"
             />
-            <div className="absolute bottom-0 w-full bg-black bg-opacity-40 text-white py-4">
+            <div className="absolute bottom-0 w-full bg-black bg-opacity-40 text-white py-3">
               <p className="text-lg font-medium">{carouselImages[current].caption}</p>
             </div>
           </div>
+
+          {/* Controls */}
           <button
             onClick={prevSlide}
-            className="absolute top-1/2 left-4 -translate-y-1/2 bg-white text-black px-3 py-2 rounded-full shadow"
+            className="absolute left-3 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
           >
             ‹
           </button>
           <button
             onClick={nextSlide}
-            className="absolute top-1/2 right-4 -translate-y-1/2 bg-white text-black px-3 py-2 rounded-full shadow"
+            className="absolute right-3 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
           >
             ›
           </button>
