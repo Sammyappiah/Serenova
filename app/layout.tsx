@@ -1,10 +1,8 @@
-// app/layout.tsx
 import "./globals.css";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Serenova",
-  description: "Experience comfort, elegance, and tranquility in the heart of Romania",
+export const metadata = {
+  title: "Serenova Hotel",
+  description: "Comfort, elegance, and tranquility in Romania.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
