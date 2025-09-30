@@ -1,15 +1,7 @@
-import HomeClient from "./HomeClient";
+"use client";
 
-export const metadata = {
-  title: "Serenova — Quiet Luxury, Timeless Comfort",
-  description: "Cinematic stays, crafted hospitality, and a sanctuary of calm.",
-  openGraph: {
-    title: "Serenova — Quiet Luxury, Timeless Comfort",
-    description: "Cinematic stays, crafted hospitality, and a sanctuary of calm.",
-    images: ["/images/og.jpg"],
-  },
-};
+import HomePage from "./home/page";
 
-export default function Page() {
-  return <HomeClient />;
+export default function RootPage() {
+  return <HomePage />;
 }
