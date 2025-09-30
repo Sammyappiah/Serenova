@@ -1,6 +1,15 @@
-// app/page.tsx
-import { redirect } from "next/navigation";
+import HomeClient from "./HomeClient";
 
-export default function RootPage() {
-  redirect("/home");
+export const metadata = {
+  title: "Serenova — Quiet Luxury, Timeless Comfort",
+  description: "Cinematic stays, crafted hospitality, and a sanctuary of calm.",
+  openGraph: {
+    title: "Serenova — Quiet Luxury, Timeless Comfort",
+    description: "Cinematic stays, crafted hospitality, and a sanctuary of calm.",
+    images: ["/images/og.jpg"],
+  },
+};
+
+export default function Page() {
+  return <HomeClient />;
 }
