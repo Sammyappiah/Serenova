@@ -23,19 +23,19 @@ export default function HomePage() {
           src="/deluxe.jpg"
           alt="Serenova Hotel"
           fill
-          priority
           className="object-cover brightness-75"
+          priority
         />
-        <div className="relative z-10 text-center px-6">
-          <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg mb-4">
+        <div className="relative z-10 text-center text-white px-6">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
             Welcome to Serenova
           </h1>
-          <p className="text-xl md:text-2xl mb-6 drop-shadow-md text-white">
-            Experience comfort, elegance, and tranquility in the heart of Romania.
+          <p className="text-xl md:text-2xl mb-6 drop-shadow-md">
+            Experience comfort, elegance, and tranquility in the heart of Romania
           </p>
           <a
             href="/booking"
-            className="bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-6 rounded-lg transition"
+            className="bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition"
           >
             Book Your Stay
           </a>
@@ -45,7 +45,7 @@ export default function HomePage() {
       {/* Carousel Section */}
       <section className="py-16 px-6 md:px-12 lg:px-24 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-8">Discover Serenova</h2>
-        <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-xl shadow-lg">
+        <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-lg shadow-lg">
           <div className="relative h-[400px]">
             <Image
               src={carouselImages[current].src}
@@ -57,17 +57,15 @@ export default function HomePage() {
               <p className="text-lg font-medium">{carouselImages[current].caption}</p>
             </div>
           </div>
-
-          {/* Carousel Controls */}
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-black/60"
+            className="absolute top-1/2 left-4 -translate-y-1/2 bg-white text-black px-3 py-2 rounded-full shadow"
           >
             ‹
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-black/60"
+            className="absolute top-1/2 right-4 -translate-y-1/2 bg-white text-black px-3 py-2 rounded-full shadow"
           >
             ›
           </button>
