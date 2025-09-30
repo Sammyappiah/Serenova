@@ -1,66 +1,38 @@
 "use client";
-
 import Link from "next/link";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+export function Navbar() {
+  const pathname = usePathname();
+  const NavLink = ({ href, label }: { href: string; label: string }) => {
+    const active = pathname?.startsWith(href);
+    return (
+      <Link
+        href={href}
+        className={`px-4 py-2 rounded-xl transition lift ${
+          active
+            ? "bg-black text-white shadow-md"
+            : "hover:bg-black/5"
+        }`}
+      >
+        {label}
+      </Link>
+    );
+  };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-white/95 backdrop-blur border-b border-black/10">
-      <nav className="container mx-auto flex h-16 items-center justify-between px-6">
-        <Link href="/" className="font-serif text-2xl text-sereno-green tracking-wide">
+    <header className="sticky top-0 z-50 border-b border-black/10 backdrop-blur bg-white/70">
+      <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <Link href="/home" className="text-xl font-semibold tracking-wide heading">
           Serenova
         </Link>
-
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
-          <Link className="nav-link" href="/">Home</Link>
-          <Link className="nav-link" href="/about">About</Link>
-          <Link className="nav-link" href="/booking">Booking</Link>
-          <Link className="nav-link" href="/contact">Contact</Link>
-        </div>
-
-        {/* Mobile toggle */}
-        <button
-          aria-label="Open menu"
-          className="md:hidden p-2 rounded-xl border border-black/10"
-          onClick={() => setIsOpen((s) => !s)}
-        >
-          {isOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </nav>
-
-      {/* Mobile dropdown */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            key="mobile"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden bg-white shadow-md px-6 py-4"
-          >
-            <div className="flex flex-col gap-4">
-              <Link href="/" className="mobile-link" onClick={() => setIsOpen(false)}>
-                Home
-              </Link>
-              <Link href="/about" className="mobile-link" onClick={() => setIsOpen(false)}>
-                About
-              </Link>
-              <Link href="/booking" className="mobile-link" onClick={() => setIsOpen(false)}>
-                Booking
-              </Link>
-              <Link href="/contact" className="mobile-link" onClick={() => setIsOpen(false)}>
-                Contact
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <nav className="flex items-center gap-2">
+          <NavLink href="/home" label="Home" />
+          <NavLink href="/about" label="About" />
+          <NavLink href="/booking" label="Booking" />
+          <NavLink href="/contact" label="Contact" />
+        </nav>
+      </div>
     </header>
   );
 }

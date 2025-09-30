@@ -1,45 +1,50 @@
 "use client";
-
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-export default function AboutPage() {
-  const images = [
-    { src: "/amenities/reception.jpg", alt: "Reception" },
-    { src: "/amenities/team.jpg", alt: "Team" },
-    { src: "/amenities/garden.jpg", alt: "Garden" },
-    { src: "/amenities/lounge.jpg", alt: "Lounge" },
-  ];
+export const metadata = {
+  title: "About Serenova",
+  description: "Our story, values, and commitment to crafted hospitality.",
+  openGraph: { title:"About Serenova", description:"Our story and values.", images:["/images/og.jpg"] }
+};
 
+export default function AboutPage(){
   return (
-    <main className="bg-cream text-deep-forest min-h-screen">
-      <section className="max-w-6xl mx-auto py-16 px-6">
-        <h1 className="text-4xl font-serif text-sereno-green mb-8">About Us</h1>
-        <p className="text-lg text-neutral-700 mb-12">
-          At Serenova, we believe luxury and sustainability can live side by
-          side. Our retreat offers a space to reconnect with nature and enjoy
-          refined hospitality.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {images.map((img, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Image
-                src={img.src}
-                alt={img.alt}
-                width={800}
-                height={600}
-                className="rounded-2xl shadow-lg object-cover w-full h-[300px]"
-              />
-            </motion.div>
-          ))}
+    <div className="min-h-screen">
+      <section className="relative h-[50vh]">
+        <Image src="/images/garden.jpg" alt="Serenova Garden" fill className="object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60" />
+        <div className="relative z-10 max-w-5xl mx-auto px-6 h-full flex items-end pb-10">
+          <div className="glass rounded-3xl p-8 text-white">
+            <h1 className="h-serif text-4xl md:text-5xl">About Serenova</h1>
+            <p className="mt-2 text-white/90">Blending comfort, elegance, and nature to create your sanctuary.</p>
+          </div>
         </div>
       </section>
-    </main>
+
+      <section className="max-w-5xl mx-auto px-6 py-16 space-y-14">
+        <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} className="grid md:grid-cols-2 gap-10 items-center">
+          <Image src="/images/team.jpg" alt="Our Team" width={640} height={420} className="rounded-3xl shadow-xl" />
+          <div>
+            <h2 className="h-serif text-2xl mb-3">Our Story</h2>
+            <p className="leading-relaxed text-gray-700">
+              At Serenova, we craft experiences where design and ease meet. Every detail is considered
+              to help you arrive, exhale, and feel at home.
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} className="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <h2 className="h-serif text-2xl mb-3">Our Values</h2>
+            <p className="leading-relaxed text-gray-700">
+              We value quiet luxury: sustainability, thoughtful service, and warm authenticity —
+              the subtle details that make a stay unforgettable.
+            </p>
+          </div>
+          <Image src="/images/reception.jpg" alt="Serenova Reception" width={640} height={420} className="rounded-3xl shadow-xl" />
+        </motion.div>
+      </section>
+    </div>
   );
 }

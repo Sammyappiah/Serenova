@@ -1,48 +1,25 @@
-"use client";
+import { RoomCard } from "@/components/RoomCard";
 
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { rooms } from "@/lib/rooms";
+export const metadata = {
+  title: "Serenova — Booking",
+  description: "Choose your room and begin your stay.",
+  openGraph: { title:"Serenova — Booking", description:"Choose your room.", images:["/images/og.jpg"] }
+};
 
-export default function BookingPage() {
+const rooms = [
+  { id:"deluxe", name:"Deluxe Room", img:"/images/deluxe.jpg", price:180, guests:2, desc:"Elegance with a view, perfect for two." },
+  { id:"accessible", name:"Accessible Suite", img:"/images/accessible.jpg", price:150, guests:2, desc:"Barrier-free comfort with refined finishes." },
+  { id:"family", name:"Family Room", img:"/images/family.jpg", price:220, guests:4, desc:"Space and serenity for the whole family." },
+];
+
+export default function BookingPage(){
   return (
-    <main className="bg-cream text-deep-forest min-h-screen py-16 px-6">
-      <h1 className="text-4xl font-serif text-sereno-green text-center mb-12">
-        Book Your Stay
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {rooms.map((room, i) => (
-          <motion.div
-            key={room.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: i * 0.2 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-2xl shadow-md overflow-hidden"
-          >
-            <Image
-              src={room.image}
-              alt={room.name}
-              width={400}
-              height={300}
-              className="w-full h-56 object-cover"
-            />
-            <div className="p-6">
-              <h2 className="text-2xl font-serif mb-2">{room.name}</h2>
-              <p className="text-neutral-700 mb-4">
-                €{room.price} / night · up to {room.maxGuests} guests
-              </p>
-              <Link
-                href={`/booking/${room.id}`}
-                className="inline-block px-4 py-2 rounded-xl bg-sereno-green text-white hover:bg-[#24523d] transition"
-              >
-                View Room
-              </Link>
-            </div>
-          </motion.div>
-        ))}
+    <div className="max-w-6xl mx-auto px-4 py-16">
+      <h1 className="h-serif text-3xl mb-2">Choose your stay</h1>
+      <p className="text-gray-600 mb-8">Handpicked rooms crafted for comfort.</p>
+      <div className="grid md:grid-cols-3 gap-6">
+        {rooms.map((r) => <RoomCard key={r.id} {...r} />)}
       </div>
-    </main>
+    </div>
   );
 }

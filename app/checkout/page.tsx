@@ -1,74 +1,103 @@
 "use client";
-
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements, CardElement } from "@stripe/react-stripe-js";
+import { Elements, PaymentElement, useElements, useStripe, PaymentRequestButtonElement } from "@stripe/react-stripe-js";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "");
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-export default function CheckoutPage() {
-  const [phone, setPhone] = useState("");
+function InnerCheckout(){
+  const stripe = useStripe();
+  const elements = useElements();
+  const sp = useSearchParams();
+
+  const amount = Number(sp.get("amount") || "0");
+  const currency = (sp.get("currency") || "eur").toLowerCase();
+  const roomName = sp.get("roomName") || "Room";
+  const checkIn = sp.get("checkIn") || "";
+  const checkOut = sp.get("checkOut") || "";
+  const guests = sp.get("guests") || "1";
+  const nights = sp.get("nights") || "1";
+
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [prReady, setPrReady] = useState(false);
+  const [paymentRequest, setPaymentRequest] = useState<stripe.PaymentRequest | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount, currency,
+          metadata:{ roomName, checkIn, checkOut, guests, nights }
+        })
+      });
+      const data = await res.json();
+      setClientSecret(data.clientSecret ?? null);
+    })();
+  }, [amount, currency, roomName, checkIn, checkOut, guests, nights]);
+
+  // Apple Pay / Google Pay (Payment Request Button)
+  useEffect(() => {
+    (async () => {
+      if (!stripe) return;
+      const pr = stripe.paymentRequest({
+        country: "RO",
+        currency,
+        total: { label: roomName, amount: Math.round(amount * 100) },
+        requestPayerName: true,
+        requestPayerEmail: true,
+      });
+      const can = await pr.canMakePayment();
+      if (can) { setPaymentRequest(pr); setPrReady(true); }
+    })();
+  }, [stripe, amount, currency, roomName]);
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!stripe || !elements) return;
+    const { error } = await stripe.confirmPayment({ elements, confirmParams: { return_url: `${window.location.origin}/confirmation` } });
+    if (error) alert(error.message);
+  };
 
   return (
-    <main className="bg-cream text-deep-forest px-6 md:px-20 py-16">
-      <h1 className="font-serif text-4xl mb-8 text-sereno-green">Checkout</h1>
-      <p className="text-neutral-700 mb-10 max-w-2xl">
-        Secure your reservation. Your details are encrypted and handled via Stripe.
-      </p>
+    <div className="max-w-3xl mx-auto px-4 py-12 space-y-6">
+      <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} className="glass rounded-3xl p-6">
+        <div className="flex items-center justify-between">
+          <h1 className="h-serif text-2xl">Checkout</h1>
+          <div className="text-sm text-gray-700">{roomName}</div>
+        </div>
+        <div className="text-sm text-gray-600 mt-1">{checkIn} → {checkOut} · {guests} guest(s) · {nights} night(s)</div>
+        <div className="font-semibold text-lg mt-2">Total: €{amount.toFixed(2)}</div>
+      </motion.div>
 
-      <Elements stripe={stripePromise}>
-        <motion.form
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="max-w-xl space-y-6 bg-white p-6 rounded-2xl shadow-xl"
-          onSubmit={(e) => e.preventDefault()}
-        >
-          <div>
-            <label className="block text-sm font-medium mb-2">Full Name</label>
-            <input
-              type="text"
-              required
-              className="w-full rounded-xl border border-neutral-300 px-4 py-3 outline-none focus:ring-2 focus:ring-sereno-green"
-            />
-          </div>
+      {prReady && paymentRequest && (
+        <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} className="card p-6">
+          <PaymentRequestButtonElement options={{ paymentRequest }} />
+          <div className="text-xs text-gray-500 mt-2">Or pay with card below</div>
+        </motion.div>
+      )}
 
-          <div>
-            <label className="block text-sm font-medium mb-2">Email</label>
-            <input
-              type="email"
-              required
-              className="w-full rounded-xl border border-neutral-300 px-4 py-3 outline-none focus:ring-2 focus:ring-sereno-green"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-2">Phone (International)</label>
-            <input
-              type="tel"
-              placeholder="+44 20 7123 4567"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="w-full rounded-xl border border-neutral-300 px-4 py-3 outline-none focus:ring-2 focus:ring-sereno-green"
-            />
-            <p className="text-xs text-neutral-500 mt-1">
-              Include country code (e.g. +44, +1, +40).
-            </p>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-2">Card Details</label>
-            <div className="rounded-xl border border-neutral-300 px-4 py-3">
-              <CardElement options={{ hidePostalCode: true }} />
-            </div>
-          </div>
-
-          <button className="w-full mt-4 rounded-xl bg-sereno-green text-white py-3 hover:bg-[#24523d] transition">
-            Pay & Confirm
-          </button>
+      {clientSecret && (
+        <motion.form initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} onSubmit={onSubmit} className="card p-6 space-y-4">
+          <PaymentElement />
+          <button className="btn-primary w-full">Pay now</button>
         </motion.form>
-      </Elements>
-    </main>
+      )}
+    </div>
+  );
+}
+
+export default function CheckoutPage(){
+  const options = useMemo(() => ({
+    appearance: { theme:"flat" as const, labels:"floating" as const },
+    loader: "auto" as const,
+  }), []);
+  return (
+    <Elements stripe={stripePromise} options={{ ...options }}>
+      <InnerCheckout />
+    </Elements>
   );
 }

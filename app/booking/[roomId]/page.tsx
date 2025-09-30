@@ -1,59 +1,73 @@
 "use client";
-
-import { useParams } from "next/navigation";
 import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import dayjs from "dayjs";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { rooms } from "@/lib/rooms";
 
-export default function RoomPage() {
-  const { roomId } = useParams();
-  const room = rooms.find((r) => r.id === roomId);
+const ROOMS = {
+  deluxe:{ name:"Deluxe Room", img:"/images/deluxe.jpg", price:180, maxGuests:2 },
+  accessible:{ name:"Accessible Suite", img:"/images/accessible.jpg", price:150, maxGuests:2 },
+  family:{ name:"Family Room", img:"/images/family.jpg", price:220, maxGuests:4 },
+} as const;
 
-  if (!room) {
-    return (
-      <main className="bg-cream text-deep-forest min-h-screen flex items-center justify-center">
-        <p className="text-xl">Room not found.</p>
-      </main>
-    );
-  }
+export const metadata = {
+  title: "Room details — Serenova",
+  description: "Select dates and confirm your stay.",
+  openGraph: { title:"Room details — Serenova", images:["/images/og.jpg"] }
+};
+
+export default function RoomDetailPage(){
+  const { roomId } = useParams<{ roomId: keyof typeof ROOMS }>();
+  const router = useRouter();
+  const room = ROOMS[roomId] ?? ROOMS.deluxe;
+
+  const [checkIn, setCheckIn] = useState<string>(dayjs().add(1,"day").format("YYYY-MM-DD"));
+  const [checkOut, setCheckOut] = useState<string>(dayjs().add(3,"day").format("YYYY-MM-DD"));
+  const [guests, setGuests] = useState<number>(1);
+
+  const nights = useMemo(()=> Math.max(dayjs(checkOut).diff(dayjs(checkIn),"day"),1), [checkIn,checkOut]);
+  const total  = useMemo(()=> nights * room.price, [nights, room.price]);
+
+  const proceed = ()=>{
+    if(guests > room.maxGuests){ alert(`Max ${room.maxGuests} guests for the ${room.name}.`); return; }
+    const qs = new URLSearchParams({
+      roomId:String(roomId), roomName:room.name, price:String(room.price),
+      checkIn, checkOut, nights:String(nights), guests:String(guests),
+      amount:String(total), currency:"eur",
+    });
+    router.push(`/checkout?${qs.toString()}`);
+  };
 
   return (
-    <main className="bg-cream text-deep-forest min-h-screen py-16 px-6">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Image
-            src={room.image}
-            alt={room.name}
-            width={600}
-            height={400}
-            className="rounded-2xl shadow-lg object-cover w-full h-[350px]"
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 className="font-serif text-4xl mb-4 text-sereno-green">
-            {room.name}
-          </h1>
-          <p className="text-lg text-neutral-700 mb-6">{room.description}</p>
-          <p className="text-xl font-semibold mb-6">
-            €{room.price} / night · up to {room.maxGuests} guests
-          </p>
-          <Link
-            href="/checkout"
-            className="inline-block px-6 py-3 rounded-xl bg-sereno-green text-white hover:bg-[#24523d] transition"
-          >
-            Proceed to Booking
-          </Link>
-        </motion.div>
-      </div>
-    </main>
+    <div className="max-w-6xl mx-auto px-4 py-12 grid md:grid-cols-2 gap-10">
+      <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} className="relative h-[48vh] rounded-3xl overflow-hidden shadow-2xl">
+        <Image src={room.img} alt={room.name} fill className="object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        <div className="absolute bottom-5 left-5 h-serif text-white text-2xl">{room.name}</div>
+      </motion.div>
+
+      <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} className="card p-6 space-y-5">
+        <div className="text-sm text-gray-600">€{room.price}/night · Max {room.maxGuests} guests</div>
+        <div className="grid grid-cols-2 gap-4">
+          <div><label className="text-sm">Check-in</label>
+            <input type="date" value={checkIn} onChange={e=>setCheckIn(e.target.value)} className="w-full mt-1 rounded-2xl border p-3" />
+          </div>
+          <div><label className="text-sm">Check-out</label>
+            <input type="date" value={checkOut} onChange={e=>setCheckOut(e.target.value)} className="w-full mt-1 rounded-2xl border p-3" />
+          </div>
+          <div><label className="text-sm">Guests</label>
+            <input type="number" min={1} max={room.maxGuests} value={guests} onChange={e=>setGuests(parseInt(e.target.value||"1"))} className="w-full mt-1 rounded-2xl border p-3" />
+          </div>
+          <div className="flex items-end">
+            <div className="w-full rounded-2xl border p-3">
+              <div className="text-sm text-gray-600">{nights} night(s)</div>
+              <div className="font-semibold">Total: €{total}</div>
+            </div>
+          </div>
+        </div>
+        <button onClick={proceed} className="btn-primary w-full">Proceed to Payment</button>
+      </motion.div>
+    </div>
   );
 }

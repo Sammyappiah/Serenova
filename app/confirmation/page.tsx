@@ -1,15 +1,15 @@
-export default function ConfirmationPage() {
+export const metadata = {
+  title: "Booking confirmed — Serenova",
+  description: "Your payment was successful.",
+  openGraph: { title:"Booking confirmed — Serenova", images:["/images/og.jpg"] }
+};
+
+export default function ConfirmationPage(){
   return (
-    <main className="bg-cream text-deep-forest min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-3xl font-serif text-sereno-green mb-4">
-          Booking Confirmed!
-        </h1>
-        <p className="text-lg text-neutral-700">
-          Thank you for choosing Serenova. A confirmation email has been sent to
-          your inbox.
-        </p>
-      </div>
-    </main>
+    <div className="max-w-3xl mx-auto px-4 py-24 text-center">
+      <h1 className="h-serif text-3xl">Payment confirmed 🎉</h1>
+      <p className="text-gray-600 mt-3">Thank you for your booking. A confirmation email will follow shortly.</p>
+      <a href="/home" className="btn-primary mt-8">Back to Home</a>
+    </div>
   );
 }
