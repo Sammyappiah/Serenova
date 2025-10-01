@@ -1,8 +1,9 @@
 import "./globals.css";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Serenova Hotel",
-  description: "Comfort, elegance, and tranquility in Romania.",
+  description: "Experience comfort, elegance, and tranquility in Romania.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
