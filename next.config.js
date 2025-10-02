@@ -2,16 +2,8 @@
 const nextConfig = {
   async redirects() {
     return [
-      {
-        source: '/home',
-        destination: '/',
-        permanent: true,
-      },
-      {
-        source: '/',
-        destination: '/page', // fallback safeguard
-        permanent: false,
-      },
+      // If you want '/', just leave it alone so it loads app/page.tsx
+      // Add custom redirects here if needed
     ]
   },
 }

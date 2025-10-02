@@ -1,16 +1,16 @@
 export default function ContactPage() {
   return (
-    <div className="max-w-3xl mx-auto px-4 py-16">
-      <h1 className="text-3xl font-bold mb-2">Contact us</h1>
-      <p className="text-gray-600 mb-8">We’d love to hear from you.</p>
-      <form className="bg-white rounded-2xl p-6 shadow border border-black/5 space-y-4">
-        <input className="w-full border rounded-xl p-3" placeholder="Your name" />
-        <input className="w-full border rounded-xl p-3" placeholder="Email address" />
-        <textarea className="w-full border rounded-xl p-3 h-40" placeholder="Your message" />
-        <button className="px-5 py-3 rounded-xl bg-black text-white font-medium hover:opacity-90">
-          Send message
+    <div className="max-w-3xl mx-auto px-6 py-16">
+      <h1 className="text-4xl font-bold mb-8 text-center">Contact Us</h1>
+      <form className="bg-white p-8 rounded-xl shadow-lg space-y-6">
+        <input type="text" placeholder="Name" className="w-full border rounded-lg p-3" />
+        <input type="email" placeholder="Email" className="w-full border rounded-lg p-3" />
+        <textarea placeholder="Message" rows={5} className="w-full border rounded-lg p-3"></textarea>
+        <button className="bg-green-700 hover:bg-green-800 text-white py-3 px-6 rounded-lg w-full">
+          Send Message
         </button>
       </form>
     </div>
   );
 }
+

@@ -1,24 +1,34 @@
-import { RoomCard } from "@/components/RoomCard";
-
-export const metadata = {
-  title: "Serenova — Booking",
-  description: "Choose your room and begin your stay.",
-  openGraph: { title:"Serenova — Booking", description:"Choose your room.", images:["/images/og.jpg"] }
-};
+import Image from "next/image";
+import Link from "next/link";
 
 const rooms = [
-  { id:"deluxe", name:"Deluxe Room", img:"/images/deluxe.jpg", price:180, guests:2, desc:"Elegance with a view, perfect for two." },
-  { id:"accessible", name:"Accessible Suite", img:"/images/accessible.jpg", price:150, guests:2, desc:"Barrier-free comfort with refined finishes." },
-  { id:"family", name:"Family Room", img:"/images/family.jpg", price:220, guests:4, desc:"Space and serenity for the whole family." },
+  { id: "deluxe", name: "Deluxe Room", img: "/deluxe.jpg", desc: "Spacious comfort with elegant decor.", price: "€120/night" },
+  { id: "accessible", name: "Accessible Suite", img: "/accessible.jpg", desc: "Designed for comfort and accessibility.", price: "€150/night" },
+  { id: "family", name: "Family Room", img: "/family.jpg", desc: "Perfect for families with extra space.", price: "€180/night" },
 ];
 
-export default function BookingPage(){
+export default function BookingPage() {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-16">
-      <h1 className="h-serif text-3xl mb-2">Choose your stay</h1>
-      <p className="text-gray-600 mb-8">Handpicked rooms crafted for comfort.</p>
-      <div className="grid md:grid-cols-3 gap-6">
-        {rooms.map((r) => <RoomCard key={r.id} {...r} />)}
+    <div className="bg-cream text-dark py-20 px-6 max-w-7xl mx-auto">
+      <div className="prose prose-xl text-center mb-12">
+        <h1>Book Your Stay</h1>
+        <p>Choose from our range of elegant rooms tailored to your needs.</p>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-10">
+        {rooms.map((room) => (
+          <div key={room.id} className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <Image src={room.img} alt={room.name} width={500} height={400} className="object-cover w-full h-60" />
+            <div className="p-6 prose">
+              <h2>{room.name}</h2>
+              <p>{room.desc}</p>
+              <p className="font-semibold text-green">{room.price}</p>
+              <Link href={`/booking/${room.id}`} className="inline-block mt-4 bg-green text-white px-4 py-2 rounded-lg hover:bg-green-800">
+                Book Now
+              </Link>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

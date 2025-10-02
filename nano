@@ -1,29 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
-
-export function RoomCard({
-  id, name, img, price, guests, desc,
-}: { id: string; name: string; img: string; price: number; guests: number; desc: string; }) {
+export default function ConfirmationPage() {
   return (
-    <div className="rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition border border-black/5">
-      <div className="relative h-56">
-        <Image src={img} alt={name} fill className="object-cover" />
-      </div>
-      <div className="p-5 space-y-3">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">{name}</h3>
-          <div className="text-sm text-gray-600">Max {guests} guests</div>
-        </div>
-        <p className="text-sm text-gray-600">{desc}</p>
-        <div className="flex items-center justify-between">
-          <div className="font-semibold">€{price}/night</div>
-          <Link
-            href={`/booking/${id}`}
-            className="px-4 py-2 rounded-xl bg-black text-white text-sm hover:opacity-90"
-          >
-            Book now
-          </Link>
-        </div>
+    <div className="bg-cream text-dark py-20 px-6 text-center">
+      <div className="prose prose-xl max-w-lg mx-auto bg-white rounded-2xl shadow-lg p-12">
+        <h1 className="text-green">✔ Booking Confirmed</h1>
+        <p>Your reservation has been successfully completed. We look forward to welcoming you to Serenova Hotel!</p>
       </div>
     </div>
   );
